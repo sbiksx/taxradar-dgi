@@ -1,0 +1,2466 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaxRadar DGI — Pré-diagnostic fiscal CGI 2026 &amp; Conformité Loi n° 69-21</title>
+  <style>
+    :root {
+      --bg: #090E1A;
+      --surface: #111827;
+      --surface-2: #161F33;
+      --elevated: #0D1424;
+      --border: #243047;
+      --border-strong: #334155;
+      --text: #F8FAFC;
+      --text-2: #CBD5E1;
+      --text-3: #94A3B8;
+      --gold: #D4AF37;
+      --gold-l: #E5C158;
+      --gold-bg: rgba(212, 175, 55, 0.12);
+      --gold-bd: rgba(212, 175, 55, 0.42);
+      --green: #10B981;
+      --green-l: #6EE7B7;
+      --green-bg: rgba(16, 185, 129, 0.12);
+      --green-bd: rgba(16, 185, 129, 0.38);
+      --amber: #F59E0B;
+      --amber-l: #FCD34D;
+      --amber-bg: rgba(245, 158, 11, 0.13);
+      --amber-bd: rgba(245, 158, 11, 0.40);
+      --red: #EF4444;
+      --red-l: #FCA5A5;
+      --red-bg: rgba(239, 68, 68, 0.14);
+      --red-bd: rgba(239, 68, 68, 0.42);
+      --blue: #3B82F6;
+      --blue-l: #93C5FD;
+      --blue-bg: rgba(59, 130, 246, 0.14);
+      --blue-bd: rgba(59, 130, 246, 0.38);
+      --r-sm: 6px;
+      --r-md: 10px;
+      --r-lg: 14px;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { font-size: 16px; scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(circle at 10% 0%, rgba(59, 130, 246, 0.08), transparent 34%),
+        radial-gradient(circle at 90% 2%, rgba(212, 175, 55, 0.06), transparent 30%);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    .mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+    :focus-visible { outline: 2px solid var(--gold-l); outline-offset: 2px; }
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+    }
+    .container { width: 100%; max-width: 1340px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header — une seule ligne fluide sur desktop, zéro logo, zéro badge de version */
+    .site-header {
+      position: sticky; top: 0; z-index: 40;
+      background-color: rgba(9, 14, 26, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .header-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 12px; padding: 12px 0; flex-wrap: wrap;
+    }
+    .brand-group { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; }
+    .brand-title {
+      font-size: 20px; font-weight: 700; letter-spacing: -0.02em;
+      line-height: 1.15; color: var(--text);
+    }
+    .brand-title .gold { color: var(--gold); margin-left: 5px; }
+    .brand-sub { font-size: 12px; color: var(--text-3); }
+
+    .tab-nav {
+      display: flex; align-items: center; gap: 4px;
+      background-color: var(--surface); padding: 4px;
+      border-radius: 999px; border: 1px solid var(--border);
+      overflow-x: auto; max-width: 100%;
+    }
+    .tab-btn {
+      appearance: none; border: 1px solid transparent; background: transparent;
+      color: var(--text-2); font-family: var(--sans); font-size: 13px; font-weight: 500;
+      padding: 8px 13px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+      display: inline-flex; align-items: center; gap: 7px; text-decoration: none;
+      transition: background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease;
+    }
+    .tab-btn:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--text); }
+    .tab-btn[aria-current="true"] {
+      background-color: var(--surface-2); color: var(--gold-l);
+      border-color: var(--gold-bd); font-weight: 600;
+    }
+    .tab-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    .li-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      background-color: var(--surface); border: 1px solid var(--border-strong);
+      color: var(--text); font-size: 13px; font-weight: 600;
+      text-decoration: none; white-space: nowrap; flex-shrink: 0;
+      transition: background-color 0.16s ease, border-color 0.16s ease, color 0.16s ease;
+    }
+    .li-btn:hover { background-color: var(--surface-2); border-color: var(--gold-bd); color: var(--gold-l); }
+    .li-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* Layout & Cards */
+    main { flex: 1; padding: 22px 0 44px; }
+    /* Page unique : toutes les sections restent visibles, les onglets font défiler vers elles */
+    .tab-panel { display: flex; scroll-margin-top: var(--header-h, 80px); }
+    .tab-panel + .tab-panel { margin-top: 44px; padding-top: 28px; border-top: 1px solid var(--border); }
+    .card {
+      background-color: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 20px;
+    }
+    .card-sub {
+      background-color: var(--elevated); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 14px 16px;
+    }
+    .sec-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 14px; flex-wrap: wrap; padding-bottom: 13px; margin-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sec-title { margin: 0; font-size: 17px; font-weight: 600; letter-spacing: -0.01em; color: var(--text); }
+    .sec-desc { margin: 4px 0 0; font-size: 13px; color: var(--text-3); }
+    .sub-h { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--text); }
+
+    .stack-sm { display: flex; flex-direction: column; gap: 10px; }
+    .stack-md { display: flex; flex-direction: column; gap: 16px; }
+    .stack-lg { display: flex; flex-direction: column; gap: 22px; }
+    .row-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .row-between { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+
+    .grid-sim { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 20px; align-items: start; }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+
+    @media (max-width: 1080px) {
+      .grid-sim { grid-template-columns: 1fr; }
+      .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 680px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+      .container { padding: 0 14px; }
+      .card { padding: 15px; }
+    }
+
+    /* Buttons, Badges & Inputs */
+    .btn {
+      appearance: none; font-family: var(--sans); font-size: 13px; font-weight: 500;
+      padding: 8px 13px; border-radius: var(--r-sm); border: 1px solid var(--border-strong);
+      background-color: var(--elevated); color: var(--text); cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 7px;
+      text-decoration: none; transition: all 0.15s ease;
+    }
+    .btn:hover:not(:disabled) { background-color: var(--surface-2); border-color: #475569; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-gold { background-color: var(--gold); border-color: var(--gold); color: #090E1A; font-weight: 600; }
+    .btn-gold:hover:not(:disabled) { background-color: var(--gold-l); border-color: var(--gold-l); }
+    .btn-blue { background-color: var(--blue-bg); border-color: var(--blue-bd); color: var(--blue-l); }
+    .btn-blue:hover:not(:disabled) { background-color: rgba(59, 130, 246, 0.24); }
+    .btn-danger { background-color: var(--red-bg); border-color: var(--red-bd); color: var(--red-l); }
+    .btn-danger:hover:not(:disabled) { background-color: rgba(239, 68, 68, 0.25); }
+    .btn-sm { padding: 6px 11px; font-size: 12px; }
+
+    .chip {
+      appearance: none; padding: 6px 10px; font-size: 12px; font-family: var(--mono);
+      background-color: var(--elevated); border: 1px solid var(--border-strong);
+      color: var(--text-2); border-radius: var(--r-sm); cursor: pointer; transition: all 0.14s ease;
+    }
+    .chip:hover { border-color: var(--gold-bd); color: var(--gold-l); }
+    .chip.active { background-color: var(--gold-bg); border-color: var(--gold); color: var(--gold-l); font-weight: 600; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px;
+      border-radius: 4px; font-size: 12px; font-weight: 600;
+      border: 1px solid transparent; white-space: nowrap;
+    }
+    .b-neutral { background: rgba(148, 163, 184, 0.13); color: var(--text-2); border-color: var(--border-strong); }
+    .b-gold    { background: var(--gold-bg); color: var(--gold-l); border-color: var(--gold-bd); }
+    .b-blue    { background: var(--blue-bg); color: var(--blue-l); border-color: var(--blue-bd); }
+    .b-green   { background: var(--green-bg); color: var(--green-l); border-color: var(--green-bd); }
+    .b-amber   { background: var(--amber-bg); color: var(--amber-l); border-color: var(--amber-bd); }
+    .b-red     { background: var(--red-bg); color: var(--red-l); border-color: var(--red-bd); }
+
+    label.fl { display: block; font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+    .help { font-size: 12px; color: var(--text-3); margin-top: 5px; line-height: 1.45; }
+
+    .inp, .sel {
+      width: 100%; background-color: var(--bg); border: 1px solid var(--border-strong);
+      border-radius: var(--r-sm); padding: 8px 11px; color: var(--text);
+      font-family: var(--sans); font-size: 13px;
+    }
+    .inp:focus, .sel:focus { border-color: var(--gold); }
+    .inp-group { position: relative; display: flex; align-items: center; }
+    .inp-group .inp { padding-right: 68px; font-family: var(--mono); font-weight: 600; font-size: 14px; }
+    .inp-sfx { position: absolute; right: 11px; font-family: var(--mono); font-size: 12px; color: var(--text-3); pointer-events: none; }
+
+    input[type="range"] {
+      -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+      border-radius: 999px; background: #243047; cursor: pointer; margin: 8px 0 4px;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none; width: 17px; height: 17px; border-radius: 50%;
+      background: var(--gold-l); border: 2px solid var(--bg);
+      box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.35); cursor: pointer;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 17px; height: 17px; border-radius: 50%; background: var(--gold-l);
+      border: 2px solid var(--bg); box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.35); cursor: pointer;
+    }
+    .scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--text-3); }
+
+    .param-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+    .param-title { font-size: 13px; font-weight: 600; color: var(--text); }
+    .param-val { font-family: var(--mono); font-size: 13px; font-weight: 700; color: var(--gold-l); white-space: nowrap; }
+
+    .segmented {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px;
+      background-color: var(--bg); padding: 4px; border-radius: var(--r-sm);
+      border: 1px solid var(--border);
+    }
+    .segmented > div { position: relative; }
+    .segmented input[type="radio"] { position: absolute; opacity: 0; width: 1px; height: 1px; }
+    .segmented label {
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      padding: 8px 6px; font-size: 12px; font-weight: 500; color: var(--text-2);
+      border-radius: 4px; cursor: pointer; border: 1px solid transparent; transition: all 0.14s ease;
+    }
+    .segmented input[type="radio"]:focus-visible + label { outline: 2px solid var(--gold-l); outline-offset: 1px; }
+    .segmented input[type="radio"]:checked + label {
+      background-color: var(--surface-2); color: var(--gold-l); border-color: var(--gold-bd); font-weight: 600;
+    }
+    .segmented input[type="radio"][value="crediteur"]:checked + label {
+      background-color: var(--red-bg); color: var(--red-l); border-color: var(--red-bd);
+    }
+
+    .check-row {
+      display: flex; align-items: flex-start; gap: 10px; padding: 9px 11px;
+      border-radius: var(--r-sm); background-color: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border); cursor: pointer; font-size: 12px; color: var(--text-2);
+    }
+    .check-row.disabled { opacity: 0.52; cursor: not-allowed; }
+    .check-row input[type="checkbox"] {
+      width: 16px; height: 16px; margin-top: 2px; accent-color: var(--gold); flex-shrink: 0; cursor: pointer;
+    }
+    .check-row.disabled input[type="checkbox"] { cursor: not-allowed; }
+
+    .regimes-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
+    .regime-box {
+      background-color: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r-sm); padding: 8px 10px; font-size: 12px;
+    }
+    .regime-box .k { display: block; color: var(--text-3); }
+    .regime-box .v { display: block; color: var(--text); font-weight: 600; margin-top: 2px; }
+
+    details.hyp-box {
+      background-color: var(--elevated); border: 1px solid var(--border);
+      border-radius: var(--r-md); overflow: hidden;
+    }
+    details.hyp-box summary {
+      padding: 12px 15px; cursor: pointer; font-size: 13px; font-weight: 600;
+      color: var(--gold-l); display: flex; align-items: center; justify-content: space-between;
+      list-style: none;
+    }
+    details.hyp-box summary::-webkit-details-marker { display: none; }
+    .hyp-body {
+      padding: 14px 15px; border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px;
+    }
+    @media (max-width: 640px) { .hyp-body, .regimes-grid { grid-template-columns: 1fr; } }
+
+    .notice-box {
+      padding: 11px 14px; border-radius: var(--r-md);
+      background-color: var(--gold-bg); border: 1px solid var(--gold-bd);
+      font-size: 12px; color: var(--text-2);
+    }
+    .notice-box strong { color: var(--gold-l); }
+
+    .kpi-card {
+      background-color: var(--elevated); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 13px 15px;
+    }
+    .kpi-lbl { font-size: 12px; color: var(--text-3); display: block; }
+    .kpi-val { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); margin-top: 5px; display: block; }
+    .kpi-sub { font-size: 12px; color: var(--text-2); margin-top: 4px; display: block; }
+
+    .adv-card {
+      background-color: var(--surface); border: 1px solid var(--border);
+      border-left-width: 4px; border-radius: var(--r-md); padding: 15px 17px;
+    }
+    .adv-card.sev-critique { border-left-color: var(--red); }
+    .adv-card.sev-eleve { border-left-color: var(--amber); }
+    .adv-card.sev-modere { border-left-color: var(--blue); }
+    .adv-cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+    @media (max-width: 820px) { .adv-cols { grid-template-columns: 1fr; } }
+    .adv-col {
+      background-color: var(--elevated); border: 1px solid var(--border);
+      border-radius: var(--r-sm); padding: 11px 12px; font-size: 12px; color: var(--text-2);
+    }
+    .adv-col h4 { margin: 0 0 6px; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+
+    .err-banner {
+      display: none; padding: 11px 14px; border-radius: var(--r-sm); font-size: 13px;
+      border: 1px solid var(--red-bd); background-color: var(--red-bg); color: var(--red-l);
+    }
+    .err-banner.visible { display: block; }
+
+    /* Tables */
+    .tbl-wrap {
+      width: 100%; overflow-x: auto; border: 1px solid var(--border);
+      border-radius: var(--r-md); background-color: var(--surface);
+    }
+    table.dt { width: 100%; border-collapse: collapse; font-size: 13px; text-align: left; }
+    table.dt th {
+      background-color: var(--elevated); color: var(--text-2); font-size: 12px; font-weight: 600;
+      padding: 10px 11px; border-bottom: 1px solid var(--border); white-space: nowrap;
+    }
+    table.dt td { padding: 9px 11px; border-bottom: 1px solid rgba(36, 48, 71, 0.8); color: var(--text); vertical-align: middle; }
+    table.dt tbody tr:last-child td { border-bottom: none; }
+    table.dt tbody tr:hover { background-color: rgba(255, 255, 255, 0.025); }
+    .tr { text-align: right; }
+    .tc { text-align: center; }
+
+    /* Code & Timeline */
+    .code-box {
+      margin: 0; padding: 15px; background-color: #060A13; border: 1px solid var(--border);
+      border-radius: var(--r-md); overflow-x: auto; font-family: var(--mono);
+      font-size: 12px; line-height: 1.55; color: #E2E8F0;
+    }
+    .xl-box {
+      margin: 0; padding: 11px 12px; background-color: #060A13; border: 1px solid var(--border);
+      border-radius: var(--r-sm); font-family: var(--mono); font-size: 12px;
+      color: var(--green-l); white-space: pre-wrap; word-break: break-word; line-height: 1.5;
+    }
+    .tl-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    @media (max-width: 780px) { .tl-grid { grid-template-columns: 1fr; } }
+    .tl-card {
+      background-color: var(--elevated); border: 1px solid var(--border);
+      border-radius: var(--r-md); padding: 15px; display: flex; flex-direction: column;
+      justify-content: space-between; gap: 10px;
+    }
+    .step-badge {
+      display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px;
+      border-radius: 4px; background-color: var(--gold-bg); border: 1px solid var(--gold-bd);
+      color: var(--gold-l); font-family: var(--mono); font-size: 12px; font-weight: 700;
+    }
+
+    /* Toast */
+    #toast-region {
+      position: fixed; bottom: 18px; right: 18px; z-index: 60;
+      display: flex; flex-direction: column; gap: 8px; max-width: 380px; pointer-events: none;
+    }
+    .toast {
+      pointer-events: auto; padding: 11px 14px; border-radius: var(--r-sm);
+      background-color: var(--surface-2); border: 1px solid var(--border-strong);
+      color: var(--text); font-size: 13px; box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+    }
+    .toast.t-success { border-left: 3px solid var(--green); }
+    .toast.t-info    { border-left: 3px solid var(--gold); }
+    .toast.t-error   { border-left: 3px solid var(--red); }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border); background-color: #060A13;
+      padding: 26px 0; margin-top: auto;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; flex-wrap: wrap;
+    }
+    .footer-left { max-width: 820px; display: flex; flex-direction: column; gap: 7px; }
+    .footer-title { margin: 0; font-size: 15px; font-weight: 700; color: var(--text); }
+    .footer-title .gold { color: var(--gold); }
+    .footer-bio { margin: 0; font-size: 13px; color: var(--text-2); line-height: 1.55; }
+    .footer-legal { margin: 0; font-size: 12px; color: var(--text-3); line-height: 1.55; }
+
+    .print-only { display: none; }
+
+    /* Print A4 */
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+      body { background: #FFFFFF !important; color: #0F172A !important; font-size: 12px !important; }
+      .no-print, .tab-nav, .li-btn, #toast-region, #sim-controls, #tab-l69, #tab-veille, #tab-tools { display: none !important; }
+      .print-only { display: block !important; }
+      .site-header, .site-footer { position: static !important; background: #FFFFFF !important; border-color: #CBD5E1 !important; }
+      .brand-title, .brand-title .gold, .sec-title, .sub-h, .kpi-val, .footer-title, .footer-title .gold,
+      table.dt td, table.dt th, h1, h2, h3, h4, strong { color: #0F172A !important; }
+      .brand-sub, .sec-desc, .kpi-lbl, .kpi-sub, .adv-col, .notice-box, .footer-bio, .footer-legal, p, span { color: #334155 !important; }
+      .card, .card-sub, .kpi-card, .adv-card, .adv-col, .notice-box, .tbl-wrap {
+        background: #FFFFFF !important; border-color: #CBD5E1 !important; box-shadow: none !important; break-inside: avoid;
+      }
+      .b-red     { background: #FEE2E2 !important; color: #991B1B !important; border-color: #FCA5A5 !important; }
+      .b-amber   { background: #FEF3C7 !important; color: #92400E !important; border-color: #FCD34D !important; }
+      .b-green   { background: #D1FAE5 !important; color: #065F46 !important; border-color: #6EE7B7 !important; }
+      .b-blue    { background: #DBEAFE !important; color: #1E40AF !important; border-color: #93C5FD !important; }
+      .b-gold    { background: #FEF9C3 !important; color: #854D0E !important; border-color: #D4AF37 !important; }
+      .b-neutral { background: #F1F5F9 !important; color: #334155 !important; border-color: #CBD5E1 !important; }
+      .grid-sim { display: block !important; }
+      svg text { fill: #0F172A !important; }
+    }
+  </style>
+</head>
+<body>
+  <noscript>
+    <div style="padding:18px;background:#7F1D1D;color:#FEE2E2;text-align:center;font-size:14px;">
+      JavaScript est requis pour utiliser TaxRadar DGI. Activez JavaScript dans votre navigateur puis rechargez la page.
+    </div>
+  </noscript>
+
+  <div id="toast-region" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="brand-group">
+        <div class="brand-title">TaxRadar<span class="gold">DGI</span></div>
+        <div class="brand-sub">Pré-diagnostic fiscal CGI 2026 &amp; Conformité Loi n° 69-21</div>
+      </div>
+
+      <nav class="tab-nav no-print" aria-label="Sections TaxRadar DGI">
+        <a href="#tab-sim" id="btn-tab-sim" class="tab-btn" data-tab="sim" aria-current="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 6-6"/></svg>
+          Simulateur fiscal
+        </a>
+        <a href="#tab-l69" id="btn-tab-l69" class="tab-btn" data-tab="l69">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          Auditeur Loi 69-21
+        </a>
+        <a href="#tab-veille" id="btn-tab-veille" class="tab-btn" data-tab="veille">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          Veille LF 2026
+        </a>
+        <a href="#tab-tools" id="btn-tab-tools" class="tab-btn" data-tab="tools">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M16 18l6-6-6-6"/><path d="M8 6l-6 6 6 6"/></svg>
+          Boîte à outils
+        </a>
+      </nav>
+
+      <a class="li-btn no-print" href="https://www.linkedin.com/in/youssef-outislyt/" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.67H6.23V17H8.34M7.28 9.79C7.98 9.79 8.54 9.22 8.54 8.52C8.54 7.82 7.98 7.25 7.28 7.25C6.59 7.25 6.02 7.82 6.02 8.52C6.02 9.22 6.59 9.79 7.28 9.79M17.77 17V13.45C17.77 11.7 17.39 10.35 15.35 10.35C14.37 10.35 13.71 10.89 13.44 11.4H13.41V10.67H11.39V17H13.5V13.86C13.5 13.03 13.66 12.23 14.68 12.23C15.69 12.23 15.7 13.17 15.7 13.91V17H17.77Z"/></svg>
+        Outislyt Youssef
+      </a>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ==================== ONGLET 1 : SIMULATEUR FISCAL ==================== -->
+    <section id="tab-sim" class="tab-panel stack-lg">
+
+      <!-- Récapitulatif imprimable (PDF) -->
+      <div id="print-summary" class="print-only card" style="margin-bottom:16px;">
+        <div class="row-between" style="border-bottom:1px solid #CBD5E1;padding-bottom:10px;margin-bottom:12px;">
+          <div>
+            <h1 style="margin:0;font-size:17px;">TaxRadar DGI — Synthèse de pré-diagnostic fiscal</h1>
+            <p style="margin:4px 0 0;font-size:12px;">CGI Édition 2026 (LF n° 50-25, B.O. n° 7465 bis) &amp; Loi n° 69-21 (B.O. n° 7204)</p>
+          </div>
+          <div style="text-align:right;font-size:12px;">
+            <div>Outil indépendant, non affilié à la DGI</div>
+            <div id="print-date"></div>
+          </div>
+        </div>
+        <div id="print-body" style="font-size:12px;"></div>
+      </div>
+
+      <!-- Scénarios pré-remplis -->
+      <div class="card no-print">
+        <div class="row-between">
+          <div class="stack-sm" style="gap:8px;">
+            <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;color:var(--text-3);">
+              Scénarios de référence (indices calculés dynamiquement)
+            </span>
+            <div class="row-wrap">
+              <button type="button" class="btn btn-sm" id="preset-conforme">
+                PME conforme <span id="badge-preset-conforme" class="badge b-green mono">--/100</span>
+              </button>
+              <button type="button" class="btn btn-sm" id="preset-vigilance">
+                Zone de vigilance <span id="badge-preset-vigilance" class="badge b-amber mono">--/100</span>
+              </button>
+              <button type="button" class="btn btn-sm" id="preset-critique">
+                Exposition élevée <span id="badge-preset-critique" class="badge b-red mono">--/100</span>
+              </button>
+            </div>
+          </div>
+          <div class="row-wrap">
+            <button type="button" class="btn btn-sm" id="btn-sim-reset">Réinitialiser</button>
+            <button type="button" class="btn btn-gold btn-sm" id="btn-sim-pdf">Exporter rapport PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-sim">
+        <!-- GAUCHE : PARAMÈTRES -->
+        <div id="sim-controls" class="card stack-md">
+          <div class="sec-head" style="margin-bottom:2px;">
+            <div>
+              <h2 class="sec-title">Paramètres de l'entité</h2>
+              <p class="sec-desc">Chiffre d'affaires HT libre et calibrage des 7 signaux fiscaux</p>
+            </div>
+            <span class="badge b-neutral mono">Total : 100 pts</span>
+          </div>
+
+          <!-- CA HT libre + raccourcis -->
+          <div class="card-sub">
+            <label for="sim-ca" class="fl">Chiffre d'affaires annuel HT (dernier exercice clos)</label>
+            <div class="inp-group">
+              <input id="sim-ca" type="text" inputmode="numeric" class="inp" value="15 000 000" aria-label="Chiffre d'affaires annuel hors taxes en dirhams" />
+              <span class="inp-sfx">MAD</span>
+            </div>
+            <div class="row-wrap" style="margin-top:8px;gap:6px;">
+              <button type="button" class="chip sim-ca-btn" data-ca="1500000">1,5 M</button>
+              <button type="button" class="chip sim-ca-btn" data-ca="5000000">5 M</button>
+              <button type="button" class="chip sim-ca-btn" data-ca="15000000">15 M</button>
+              <button type="button" class="chip sim-ca-btn" data-ca="50000000">50 M</button>
+              <button type="button" class="chip sim-ca-btn" data-ca="250000000">250 M</button>
+              <button type="button" class="chip sim-ca-btn" data-ca="550000000">550 M</button>
+            </div>
+
+            <label class="check-row" style="margin-top:10px;">
+              <input id="sim-special" type="checkbox" aria-label="Banque, Assurance, État ou établissement public" />
+              <span><strong style="color:var(--text);">Banque / Assurance / État / EEP</strong> — Soumis aux retenues à la source LF 2026 quel que soit le seuil de CA (Art. 19-IV-A, 117-V &amp; 157-I).</span>
+            </label>
+
+            <div class="regimes-grid" aria-live="polite">
+              <div class="regime-box"><span class="k">Tranche Loi 69-21 (Art. 78-6)</span><span id="reg-6921" class="v">--</span></div>
+              <div class="regime-box"><span class="k">Visa requis (Art. 78-4)</span><span id="reg-visa" class="v">--</span></div>
+              <div class="regime-box"><span class="k">RAS LF 2026 (Art. 247-XXXXVI)</span><span id="reg-ras" class="v">--</span></div>
+              <div class="regime-box"><span class="k">Commission de recours</span><span id="reg-comm" class="v">--</span></div>
+            </div>
+          </div>
+
+          <!-- 1. Écart CA vs TVA (max 18 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <label for="sim-tva-gap" class="param-title">1. Écart CA comptable (711/712) vs CA déclaré TVA</label>
+              <span id="val-tva-gap" class="param-val">0,0 %</span>
+            </div>
+            <input id="sim-tva-gap" type="range" min="0" max="20" step="0.5" value="0" aria-label="Écart en pourcentage entre chiffre d'affaires comptable et chiffre d'affaires déclaré TVA" />
+            <div class="scale"><span>0 %</span><span>2 %</span><span>10 %</span><span>20 %</span></div>
+            <div class="help">Heuristique d'audit : le seuil de 2 % n'est pas fixé par le CGI mais reflète un écart usuel à documenter (Art. 95, 110, 111 &amp; 221 bis-III). Max : 18 pts.</div>
+          </div>
+
+          <!-- 2. Déficits consécutifs (max 14 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <label for="sim-deficits" class="param-title">2. Déficits fiscaux consécutifs</label>
+              <span id="val-deficits" class="param-val">0 exercice</span>
+            </div>
+            <input id="sim-deficits" type="range" min="0" max="6" step="1" value="0" aria-label="Nombre d'exercices déficitaires consécutifs" />
+            <div class="scale"><span>0</span><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6 ex.</span></div>
+            <label class="check-row" style="margin-top:9px;">
+              <input id="sim-no-etat" type="checkbox" aria-label="État explicatif du déficit non déposé" />
+              <span>État explicatif du déficit non déposé (Art. 20-IV) — amende de 2 000 MAD après mise en demeure préalable de 15 jours (Art. 198 bis).</span>
+            </label>
+            <div class="help">Droit de contrôle étendu aux 4 exercices prescrits, plafonné aux déficits imputés (Art. 232-III). Max : 14 pts.</div>
+          </div>
+
+          <!-- 3. Caisse 5161 — 3 états exclusifs (max 22 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <span id="lbl-caisse-grp" class="param-title">3. Compte Caisse (CGNC 5161)</span>
+              <span id="val-caisse-pts" class="param-val">0 / 22 pts</span>
+            </div>
+            <div class="segmented" role="radiogroup" aria-labelledby="lbl-caisse-grp">
+              <div>
+                <input type="radio" id="caisse-normale" name="caisse-state" value="normale" checked />
+                <label for="caisse-normale">Normale</label>
+              </div>
+              <div>
+                <input type="radio" id="caisse-eleve" name="caisse-state" value="eleve" />
+                <label for="caisse-eleve">Solde &gt; 500 k</label>
+              </div>
+              <div>
+                <input type="radio" id="caisse-crediteur" name="caisse-state" value="crediteur" />
+                <label for="caisse-crediteur">Solde créditeur</label>
+              </div>
+            </div>
+            <div id="wrap-caisse-amt" style="display:none;margin-top:10px;">
+              <label for="sim-caisse-amt" class="fl" style="font-size:12px;">Montant du solde espèces (MAD)</label>
+              <div class="inp-group">
+                <input id="sim-caisse-amt" type="number" min="500001" max="50000000" step="50000" value="850000" class="inp" aria-label="Montant du solde espèces en caisse" />
+                <span class="inp-sfx">MAD</span>
+              </div>
+            </div>
+            <div class="help">États exclusifs. Un solde créditeur récurrent relève des erreurs graves et répétées (Art. 213-I-4°) et interdit un verdict global favorable.</div>
+          </div>
+
+          <!-- 4. Marge brute (max 14 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <label for="sim-marge" class="param-title">4. Écart de marge brute sous la moyenne sectorielle</label>
+              <span id="val-marge" class="param-val">0 pt</span>
+            </div>
+            <input id="sim-marge" type="range" min="0" max="30" step="1" value="0" aria-label="Points de marge brute sous la moyenne sectorielle" />
+            <div class="scale"><span>0 pt</span><span>10 pts</span><span>20 pts</span><span>30 pts</span></div>
+            <div class="help">Signal analytique ; la comparaison avec entreprises similaires relève des Art. 213-II et III (hors irrégularités graves Art. 213-I). Max : 14 pts.</div>
+          </div>
+
+          <!-- 5. Excédent paiements espèces TTC (max 12 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <label for="sim-cash" class="param-title">5. Excédent annuel de paiements espèces TTC au-delà des plafonds</label>
+              <span id="val-cash-pts" class="param-val">0 / 12 pts</span>
+            </div>
+            <div class="inp-group">
+              <input id="sim-cash" type="number" min="0" max="50000000" step="5000" value="0" class="inp" aria-label="Excédent annuel des paiements en espèces TTC en dirhams" />
+              <span class="inp-sfx">MAD TTC</span>
+            </div>
+            <div class="help">Plafonds : 5 000 MAD TTC/jour et 50 000 MAD TTC/mois par fournisseur (Art. 11-II &amp; 106-II). Réintégration IS sur base HT et rejet TVA sur taxe incluse. Amende vendeur 6 % dès 20 000 MAD (Art. 193).</div>
+          </div>
+
+          <!-- 6. CCA débiteur 3463 (max 10 pts) -->
+          <div class="card-sub">
+            <div class="param-head">
+              <span class="param-title">6. Compte Courant d'Associé (3463) débiteur</span>
+              <span id="val-cca-pts" class="param-val">0 / 10 pts</span>
+            </div>
+            <label class="check-row">
+              <input id="sim-cca-on" type="checkbox" aria-label="Présence d'un compte courant d'associé débiteur" />
+              <span>Solde débiteur au compte 3463 (avance à un associé personne physique — interdite en SARL/SA).</span>
+            </label>
+            <div id="wrap-cca-amt" style="display:none;margin-top:9px;">
+              <label for="sim-cca-amt" class="fl" style="font-size:12px;">Montant du CCA débiteur (MAD)</label>
+              <div class="inp-group">
+                <input id="sim-cca-amt" type="number" min="0" max="50000000" step="10000" value="250000" class="inp" aria-label="Montant du compte courant d'associé débiteur" />
+                <span class="inp-sfx">MAD</span>
+              </div>
+            </div>
+            <div class="help">Hypothèse d'audit Art. 13-VII : RAS dividendes au taux de 11,25 % en 2026 (10 % en 2027, Art. 247-XXXVII-C &amp; Art. 163-II).</div>
+          </div>
+
+          <!-- 7. Conformité déclarative (max 10 pts) -->
+          <div class="card-sub stack-sm">
+            <div class="param-head" style="margin-bottom:0;">
+              <span class="param-title">7. Conformité déclarative (Loi 69-21 &amp; RAS LF 2026)</span>
+              <span id="val-oblig-pts" class="param-val">0 / 10 pts</span>
+            </div>
+            <label id="row-6921" class="check-row">
+              <input id="sim-6921" type="checkbox" aria-label="Retard ou défaut de déclaration Loi 69-21" />
+              <span><strong style="color:var(--text);">Retard / défaut déclaration Loi 69-21</strong><br /><span id="desc-6921">--</span></span>
+            </label>
+            <label class="check-row">
+              <input id="sim-loyers-pp" type="checkbox" aria-label="Loyers versés à des personnes physiques RNR ou RNS" />
+              <span><strong style="color:var(--text);">Loyers versés à des personnes physiques (RNR / RNS)</strong> — Lecture littérale Art. 157-I (2e tiret) : RAS 5 % dès le 01/07/2026 sans seuil de CA (lecture doctrinale alternative : calendrier 500/350/200 M pour tous payeurs, à confirmer par circulaire DGI).</span>
+            </label>
+            <label id="row-ras" class="check-row">
+              <input id="sim-ras" type="checkbox" aria-label="Défaut d'application RAS LF 2026" />
+              <span><strong style="color:var(--text);">Défaut RAS LF 2026 (IS 5 % / Loyers 5 % / TVA 75–100 %)</strong><br /><span id="desc-ras">--</span></span>
+            </label>
+          </div>
+
+          <!-- Panneau d'hypothèses paramétrables -->
+          <details class="hyp-box" open>
+            <summary>
+              <span>Hypothèses de chiffrage (paramétrables)</span>
+              <span class="badge b-gold mono">Modifiables</span>
+            </summary>
+            <div class="hyp-body">
+              <div>
+                <label for="hyp-is" class="fl">Taux d'IS</label>
+                <select id="hyp-is" class="sel" aria-label="Taux d'impôt sur les sociétés">
+                  <option value="0.20" selected>20 % (Art. 19-I-A)</option>
+                  <option value="0.35">35 % (Bénéf. ≥ 100 M, Art. 19-I-B)</option>
+                  <option value="0.40">40 % (Banques/Ass., Art. 19-I-C)</option>
+                </select>
+              </div>
+              <div>
+                <label for="hyp-tva" class="fl">Taux TVA (Art. 99)</label>
+                <select id="hyp-tva" class="sel" aria-label="Taux de TVA 2026">
+                  <option value="0.20" selected>20 % (Taux normal)</option>
+                  <option value="0.10">10 % (Taux réduit)</option>
+                </select>
+              </div>
+              <div>
+                <label for="hyp-186" class="fl">Statut Art. 186-A</label>
+                <select id="hyp-186" class="sel" aria-label="Taux de majoration article 186-A">
+                  <option value="0.30" selected>30 % — Assujetti TVA / RAS</option>
+                  <option value="0.20">20 % — Hors TVA &amp; RAS</option>
+                </select>
+              </div>
+              <div>
+                <label for="hyp-years" class="fl">Exercices vérifiés</label>
+                <select id="hyp-years" class="sel" aria-label="Nombre d'exercices vérifiés">
+                  <option value="1" selected>1 exercice</option>
+                  <option value="2">2 exercices</option>
+                  <option value="3">3 exercices</option>
+                  <option value="4">4 exercices (Art. 232-I)</option>
+                </select>
+              </div>
+              <div>
+                <label for="hyp-months" class="fl">Mois de retard (Art. 208)</label>
+                <div class="inp-group">
+                  <input id="hyp-months" type="number" min="1" max="48" value="12" class="inp" aria-label="Nombre de mois de retard" />
+                  <span class="inp-sfx">mois</span>
+                </div>
+              </div>
+              <div>
+                <div class="param-head" style="margin-bottom:2px;">
+                  <label for="hyp-reconst" class="fl" style="margin:0;">Reconstitution CA (rejet)</label>
+                  <span id="val-hyp-reconst" class="param-val">5 %</span>
+                </div>
+                <input id="hyp-reconst" type="range" min="2" max="15" step="1" value="5" aria-label="Pourcentage d'hypothèse de reconstitution du chiffre d'affaires" />
+              </div>
+              <div style="grid-column:1/-1;" class="stack-sm">
+                <label class="check-row">
+                  <input id="hyp-comm-susp" type="checkbox" aria-label="Suspension des majorations au-delà de 12 mois en cas de recours en commission" />
+                  <span>Recours en commission (CLT/CRRF/CNRF) : suspension de la majoration de retard Art. 208-I au-delà de 12 mois.</span>
+                </label>
+                <label class="check-row">
+                  <input id="hyp-fast-pay" type="checkbox" aria-label="Paiement sous 30 jours" />
+                  <span>Paiement sous 30 jours : pénalité réduite à 5 % sur droits IS (Art. 208-I).</span>
+                </label>
+                <label class="check-row">
+                  <input id="hyp-bad-faith" type="checkbox" aria-label="Inclure l'hypothèse de mauvaise foi de 100 pour cent" />
+                  <span>Inclure en borne haute l'hypothèse de mauvaise foi / dissimulation (majoration 100 %, Art. 186-B).</span>
+                </label>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- DROITE : DIAGNOSTIC & EXPOSITION -->
+        <div class="stack-md">
+          <div class="notice-box">
+            <strong>Cadre d'utilisation :</strong> Simulateur indépendant non affilié à la DGI — Indice indicatif fondé sur des hypothèses paramétrables. <span class="mono" style="color:var(--gold-l);">Sources vérifiées au 22/11/2026</span> (CGI 2026 &amp; Loi n° 69-21).
+          </div>
+
+          <details class="hyp-box no-print">
+            <summary>
+              <span>Méthodologie de pondération (/100) &amp; sources légales vérifiées</span>
+              <span class="badge b-neutral mono">Transparence</span>
+            </summary>
+            <div style="padding:12px 15px;border-top:1px solid var(--border);font-size:12px;color:var(--text-2);line-height:1.55;">
+              <p style="margin:0 0 8px;"><strong style="color:var(--text);">Répartition des 100 points (heuristique d'audit continue, sans barème officiel DGI) :</strong> Écart CA/TVA (18 pts) • Caisse 5161 (22 pts) • Déficits &amp; état Art. 20-IV (14 pts) • Marge brute (14 pts) • Excédent espèces TTC (12 pts) • CCA débiteur 3463 (10 pts) • Conformité Loi 69-21 &amp; RAS LF 2026 (10 pts). Une caisse créditrice ou un signal critique isolé empêche tout classement « Profil conforme ».</p>
+              <p style="margin:0;"><strong style="color:var(--text);">Vérification des sources (au 22/11/2026) :</strong> CGI Édition 2026 (LF n° 50-25, Dahir n° 1-25-67 du 10/12/2025, B.O. n° 7465 bis du 16/12/2025) • Loi n° 69-21 (B.O. n° 7204, Art. 78-1 à 78-10 Code de commerce) • Taux directeur Bank Al-Maghrib à confirmer sur <span class="mono">bkam.ma</span>.</p>
+            </div>
+          </details>
+
+          <div class="grid-2">
+            <div class="card" style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;">
+              <div class="row-between" style="width:100%;margin-bottom:4px;">
+                <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-3);">Indice d'exposition</span>
+                <span id="sig-count-badge" class="badge b-neutral mono">0 signal</span>
+              </div>
+              <div id="gauge-wrap" style="width:100%;max-width:240px;margin:4px 0;"></div>
+              <div id="verdict-box" style="width:100%;margin-top:8px;padding:10px 12px;border-radius:var(--r-sm);font-size:13px;font-weight:600;border:1px solid var(--border);">Profil conforme</div>
+              <p id="verdict-note" style="margin:8px 0 0;font-size:12px;color:var(--text-3);"></p>
+            </div>
+
+            <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;">
+              <div class="row-between" style="margin-bottom:4px;">
+                <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:var(--text-3);">Profil par axe (base 100)</span>
+                <span class="badge b-neutral mono">6 axes</span>
+              </div>
+              <div id="radar-wrap" style="width:100%;display:flex;align-items:center;justify-content:center;min-height:224px;"></div>
+            </div>
+          </div>
+
+          <!-- 4 cartes d'exposition financière -->
+          <div class="card stack-md">
+            <div class="row-between" style="border-bottom:1px solid var(--border);padding-bottom:10px;">
+              <div>
+                <h3 class="sub-h" style="margin:0;font-size:15px;">Estimation de l'exposition financière</h3>
+                <p id="exp-hyp-line" class="sec-desc" style="margin-top:2px;">--</p>
+              </div>
+              <span id="exp-ca-pct" class="badge b-gold mono">0,0 % du CA</span>
+            </div>
+
+            <div class="grid-2">
+              <div class="kpi-card">
+                <span class="kpi-lbl">1. Droits en principal estimés (IS / TVA / RAS)</span>
+                <span id="exp-principal" class="kpi-val">0 MAD</span>
+                <span id="exp-principal-sub" class="kpi-sub">IS : 0 | TVA : 0 | RAS : 0</span>
+                <span id="exp-cm-ref" class="kpi-sub" style="color:var(--text-3);">Repère Cotisation Minimale (Art. 144) : --</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-lbl">2. Majorations &amp; pénalités (Art. 186 &amp; 208)</span>
+                <span id="exp-penalties" class="kpi-val" style="color:var(--amber-l);">0 MAD</span>
+                <span id="exp-penalties-sub" class="kpi-sub">--</span>
+              </div>
+              <div class="kpi-card">
+                <span class="kpi-lbl">3. Amendes fixes (Loi 69-21 &amp; Art. 198 bis)</span>
+                <span id="exp-fixed" class="kpi-val" style="color:var(--red-l);">0 MAD</span>
+                <span class="kpi-sub">Strictement séparées des droits en principal</span>
+              </div>
+              <div class="kpi-card" style="border-color:var(--gold-bd);">
+                <span class="kpi-lbl">4. Exposition globale estimée (fourchette)</span>
+                <span id="exp-global" class="kpi-val" style="color:var(--gold-l);font-size:18px;">0 MAD</span>
+                <span id="exp-global-sub" class="kpi-sub">Principal + Sanctions + Amendes fixes</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fiches d'analyse -->
+          <div class="stack-md">
+            <div>
+              <h3 class="sec-title" style="font-size:16px;">Analyse des signaux actifs &amp; remédiation</h3>
+              <p class="sec-desc">Classés par niveau de criticité — références CGI 2026 &amp; Loi n° 69-21</p>
+            </div>
+            <div id="advisory-list" class="stack-md"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ONGLET 2 : AUDITEUR LOI 69-21 ==================== -->
+    <section id="tab-l69" class="tab-panel stack-lg">
+      <div class="card stack-md">
+        <div class="sec-head" style="margin-bottom:0;">
+          <div>
+            <h2 class="sec-title">Auditeur des délais de paiement fournisseurs (Loi n° 69-21)</h2>
+            <p class="sec-desc">Articles 78-1 à 78-10 du Code de commerce (B.O. n° 7204 — vérifié au 22/11/2026) — Calculs en Date.UTC, historique BAM daté, exemptions légales et regroupement déclaratif.</p>
+          </div>
+          <div class="row-wrap no-print">
+            <button type="button" class="btn btn-sm" id="btn-l69-tpl">Modèle CSV</button>
+            <button type="button" class="btn btn-sm" id="btn-l69-sample">Jeu de test</button>
+            <label class="btn btn-blue btn-sm" for="l69-file" style="margin:0;">
+              Importer CSV
+              <input id="l69-file" type="file" accept=".csv,text/csv" class="sr-only" />
+            </label>
+            <button type="button" class="btn btn-gold btn-sm" id="btn-l69-export">Exporter résultats CSV</button>
+            <button type="button" class="btn btn-danger btn-sm" id="btn-l69-clear">Vider</button>
+          </div>
+        </div>
+
+        <div id="l69-err" class="err-banner" role="alert"></div>
+
+        <div class="grid-2">
+          <div class="card-sub">
+            <div class="row-between" style="margin-bottom:6px;">
+              <label for="l69-ca" class="fl" style="margin:0;">Chiffre d'affaires annuel HT (dernier exercice clos)</label>
+              <button type="button" class="chip" id="btn-l69-sync">Reprendre CA Simulateur</button>
+            </div>
+            <div class="inp-group">
+              <input id="l69-ca" type="text" inputmode="numeric" class="inp" value="15 000 000" aria-label="Chiffre d'affaires annuel HT pour la Loi 69-21" />
+              <span class="inp-sfx">MAD</span>
+            </div>
+            <div class="row-wrap" style="margin-top:8px;gap:6px;">
+              <button type="button" class="chip l69-ca-btn" data-ca="1800000">1,8 M</button>
+              <button type="button" class="chip l69-ca-btn" data-ca="8000000">8 M</button>
+              <button type="button" class="chip l69-ca-btn" data-ca="25000000">25 M</button>
+              <button type="button" class="chip l69-ca-btn" data-ca="50000000">50 M</button>
+              <button type="button" class="chip l69-ca-btn" data-ca="250000000">250 M</button>
+              <button type="button" class="chip l69-ca-btn" data-ca="600000000">600 M</button>
+            </div>
+            <div class="help">Chevauchement légal exact à 50 000 000 MAD : l'Art. 78-6 classe « ≤ 50 M » à 12 500 MAD tandis que l'Art. 78-4 exige le visa du CAC dès « ≥ 50 M ».</div>
+          </div>
+
+          <div class="card-sub stack-sm">
+            <div class="grid-2" style="gap:10px;">
+              <div>
+                <label for="l69-bam-mode" class="fl">Taux directeur BAM (fin 1er mois)</label>
+                <select id="l69-bam-mode" class="sel" aria-label="Mode de sélection du taux directeur Bank Al-Maghrib">
+                  <option value="auto" selected>Historique BAM daté auto</option>
+                  <option value="manual">Taux manuel personnalisé</option>
+                </select>
+              </div>
+              <div>
+                <label for="l69-cutoff" class="fl">Date d'arrêté (factures impayées)</label>
+                <input id="l69-cutoff" type="date" class="inp mono" aria-label="Date d'arrêté pour le calcul des factures impayées" />
+              </div>
+            </div>
+            <div id="wrap-l69-bam" style="display:none;">
+              <label for="l69-bam-val" class="sr-only">Taux directeur BAM manuel en pourcentage</label>
+              <div class="inp-group">
+                <input id="l69-bam-val" type="number" step="0.05" min="0" max="15" value="2.25" class="inp" />
+                <span class="inp-sfx">%</span>
+              </div>
+            </div>
+            <label class="check-row">
+              <input id="l69-recidive" type="checkbox" aria-label="Appliquer la majoration de récidive fois deux" />
+              <span><strong style="color:var(--text);">Récidive en contrôle sur place (×2, Art. 78-7)</strong> — Double la sanction de l'Art. 78-6 en cas de non-présentation des justificatifs lors d'un contrôle sur place (l'amende de 5 000 MAD/facture discordante n'est pas doublée par défaut).</span>
+            </label>
+            <div class="help">Historique intégré (à vérifier sur bkam.ma) : 3,00 % (≤ 24/06/2024), 2,75 % (≤ 16/12/2024), 2,50 % (≤ 17/03/2025), 2,25 % (depuis 18/03/2025). Mois supplémentaire : +0,85 % (convention 30 jours = hypothèse d'outil).</div>
+          </div>
+        </div>
+
+        <!-- 4 KPIs Loi 69-21 -->
+        <div class="grid-4">
+          <div class="kpi-card">
+            <span class="kpi-lbl">Total factures &amp; périmètre</span>
+            <span id="l69-k-total" class="kpi-val">0 facture</span>
+            <span id="l69-k-scope" class="kpi-sub">--</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-lbl">Montant TTC en retard</span>
+            <span id="l69-k-ttc" class="kpi-val" style="color:var(--amber-l);">0 MAD</span>
+            <span id="l69-k-overdue" class="kpi-sub">0 facture hors délai</span>
+          </div>
+          <div class="kpi-card" style="border-color:var(--gold-bd);">
+            <span class="kpi-lbl">Amende cumulée (Art. 78-3)</span>
+            <span id="l69-k-fine" class="kpi-val" style="color:var(--gold-l);">0 MAD</span>
+            <span id="l69-k-visa" class="kpi-sub">--</span>
+          </div>
+          <div class="kpi-card">
+            <span class="kpi-lbl">Risque défaut déclaration (Art. 78-6)</span>
+            <span id="l69-k-def" class="kpi-val" style="color:var(--red-l);">0 MAD</span>
+            <span id="l69-k-trans" class="kpi-sub">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire ajout manuel -->
+      <div class="card no-print">
+        <h3 class="sub-h" style="margin-bottom:12px;">Ajouter une facture fournisseur</h3>
+        <form id="l69-form" class="stack-md">
+          <div class="grid-4">
+            <div>
+              <label for="f-ref" class="fl">Référence *</label>
+              <input id="f-ref" type="text" required placeholder="FAC-2026-010" class="inp mono" />
+            </div>
+            <div>
+              <label for="f-fourn" class="fl">Fournisseur *</label>
+              <input id="f-fourn" type="text" required placeholder="Atlas Logistique SARL" class="inp" />
+            </div>
+            <div>
+              <label for="f-emit" class="fl">Date d'émission *</label>
+              <input id="f-emit" type="date" required value="2026-01-04" class="inp mono" />
+            </div>
+            <div>
+              <label for="f-deliv" class="fl">Livraison / Constat service (Art. 78-2)</label>
+              <input id="f-deliv" type="date" class="inp mono" />
+            </div>
+          </div>
+          <div class="grid-4" style="align-items:end;">
+            <div>
+              <label for="f-pay" class="fl">Date paiement (vide = impayée)</label>
+              <input id="f-pay" type="date" value="2026-04-10" class="inp mono" />
+            </div>
+            <div>
+              <label for="f-ttc" class="fl">Montant TTC (MAD) *</label>
+              <input id="f-ttc" type="number" required min="0.01" step="0.01" placeholder="150000" class="inp mono" />
+            </div>
+            <div>
+              <label for="f-delai" class="fl">Délai convenu (jours)</label>
+              <input id="f-delai" type="number" required min="1" max="120" value="60" class="inp mono" />
+            </div>
+            <div>
+              <label for="f-optype" class="fl">Type d'opération (Art. 78-2)</label>
+              <select id="f-optype" class="sel" aria-label="Type d'opération au sens de l'article 78-2">
+                <option value="standard" selected>Standard (date émission)</option>
+                <option value="periodique">Périodique ≤ 1 mois (1er du mois suivant)</option>
+                <option value="public">Établissement public (constat service fait)</option>
+              </select>
+            </div>
+          </div>
+          <div class="row-wrap" style="gap:16px;">
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);cursor:pointer;">
+              <input id="f-sect" type="checkbox" style="accent-color:var(--gold);" /> Décret sectoriel (plafond légal 180 j)
+            </label>
+            <label style="display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-2);cursor:pointer;">
+              <input id="f-litige" type="checkbox" style="accent-color:var(--gold);" /> Litige judiciaire (suspension Art. 78-3)
+            </label>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-gold">Ajouter la facture</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Tableau des factures -->
+      <div class="stack-sm">
+        <div class="row-between">
+          <h3 class="sub-h" style="margin:0;">Factures fournisseurs analysées</h3>
+          <span id="l69-count-lbl" class="badge b-neutral mono">0 ligne</span>
+        </div>
+        <div class="tbl-wrap">
+          <table class="dt">
+            <caption class="sr-only">Factures fournisseurs analysées au titre de la Loi n° 69-21</caption>
+            <thead>
+              <tr>
+                <th scope="col">Réf.</th>
+                <th scope="col">Fournisseur</th>
+                <th scope="col">Départ délai</th>
+                <th scope="col">Délai</th>
+                <th scope="col">Échéance</th>
+                <th scope="col">Paiement / Arrêté</th>
+                <th scope="col" class="tr">Montant TTC</th>
+                <th scope="col">Statut / Retard</th>
+                <th scope="col" class="tc">Taux BAM</th>
+                <th scope="col" class="tr">Taux total</th>
+                <th scope="col" class="tr">Amende (MAD)</th>
+                <th scope="col" class="tc no-print">Action</th>
+              </tr>
+            </thead>
+            <tbody id="l69-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tableau synthèse par période -->
+      <div class="stack-sm">
+        <h3 class="sub-h" style="margin:0;">Synthèse par période déclarative</h3>
+        <div class="tbl-wrap">
+          <table class="dt">
+            <caption class="sr-only">Synthèse des factures et amendes Loi 69-21 par période déclarative</caption>
+            <thead>
+              <tr>
+                <th scope="col">Période</th>
+                <th scope="col">Régime déclaratif</th>
+                <th scope="col">Échéance de dépôt</th>
+                <th scope="col" class="tc">Factures</th>
+                <th scope="col" class="tc">Hors délai</th>
+                <th scope="col" class="tr">TTC hors délai</th>
+                <th scope="col" class="tr">Amende Art. 78-3</th>
+              </tr>
+            </thead>
+            <tbody id="l69-periods-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Encart Contentieux & Remise gracieuse -->
+      <div class="card-sub" style="font-size:12px;color:var(--text-2);line-height:1.6;">
+        <strong style="color:var(--gold-l);">Contentieux, sanctions &amp; remise gracieuse (Loi n° 69-21) :</strong>
+        <strong>Point de départ (Art. 78-2) :</strong> date d'émission (si la facture n'est pas émise avant la fin du mois de livraison, le délai court dès la fin de ce mois ; pour les <strong>transactions périodiques</strong> d'au plus un mois, dès le 1er jour du mois suivant ; pour les <strong>établissements publics</strong>, dès la date de constatation du service fait). Tout délai convenu dépassant 120 j (ou 180 j sectoriel) est plafonné au maximum légal.
+        <strong>Contentieux (Art. 78-9) :</strong> réclamation adressée au ministre chargé des Finances dans les <strong>6 mois</strong> suivant le mois d'émission de l'ordre de recettes ; l'administration dispose de <strong>3 mois</strong> pour répondre ; à défaut ou en cas de rejet, recours devant le tribunal compétent dans un délai de <strong>2 mois</strong>.
+        <strong>Remise gracieuse (Art. 78-10) :</strong> remise ou modération conditionnée au règlement effectif préalable des factures ayant généré les amendes.
+        <strong>Récidive (Art. 78-7) :</strong> doublement de la sanction prévue à l'Art. 78-6 en cas de récidive lors d'un contrôle sur place (défaut de production des justificatifs).
+      </div>
+    </section>
+
+    <!-- ==================== ONGLET 3 : VEILLE LF 2026 ==================== -->
+    <section id="tab-veille" class="tab-panel stack-lg">
+      <div class="card stack-md">
+        <div class="sec-head" style="margin-bottom:0;">
+          <div>
+            <h2 class="sec-title">Veille fiscale — Loi de Finances n° 50-25 (CGI 2026)</h2>
+            <p class="sec-desc">Dahir n° 1-25-67 du 10 décembre 2025 — Bulletin Officiel n° 7465 bis du 16 décembre 2025 — CGI Édition 2026 (vérifié au 22/11/2026).</p>
+          </div>
+          <div style="min-width:250px;flex:0 1 340px;">
+            <label for="v-search" class="sr-only">Rechercher dans la veille LF 2026</label>
+            <input id="v-search" type="search" class="inp" placeholder="Rechercher (ex: dechets, loyers, 350M, OPCC)..." />
+          </div>
+        </div>
+        <div id="v-filters" class="row-wrap" role="group" aria-label="Filtrer la veille par impôt"></div>
+      </div>
+      <div id="v-grid" class="grid-2"></div>
+    </section>
+
+    <!-- ==================== ONGLET 4 : BOÎTE À OUTILS & PROCÉDURE ==================== -->
+    <section id="tab-tools" class="tab-panel stack-lg">
+
+      <!-- Script Python CLI -->
+      <div class="card stack-md">
+        <div class="sec-head" style="margin-bottom:0;">
+          <div>
+            <h2 class="sec-title">Script Python d'audit comptable &amp; fiscal (CLI)</h2>
+            <p class="sec-desc">Exécutable <span class="mono">audit_taxradar_dgi.py</span> avec <span class="mono">argparse</span>, validation des colonnes, dates FR (<span class="mono">dayfirst=True</span>), report à nouveau caisse 5161, plafonds espèces journalier + mensuel et rapprochement algébrique CA/TVA.</p>
+          </div>
+          <div class="row-wrap no-print">
+            <button type="button" class="btn btn-sm" id="btn-py-copy">Copier le script</button>
+            <button type="button" class="btn btn-gold btn-sm" id="btn-py-dl">Télécharger .py</button>
+          </div>
+        </div>
+        <pre id="py-code" class="code-box"></pre>
+      </div>
+
+      <!-- Formules Excel FR / EN -->
+      <div class="card stack-md">
+        <div class="sec-head" style="margin-bottom:0;">
+          <div>
+            <h2 class="sec-title">Formules Excel d'audit CGNC &amp; CGI 2026</h2>
+            <p class="sec-desc">Résistantes aux numéros de comptes stockés en format numérique ou texte (<span class="mono">TEXTE/TEXT</span>).</p>
+          </div>
+          <div class="row-wrap no-print" role="group" aria-label="Langue des formules Excel">
+            <button type="button" id="xl-fr" class="chip active">Excel FR</button>
+            <button type="button" id="xl-en" class="chip">Excel EN</button>
+          </div>
+        </div>
+        <div id="xl-grid" class="grid-2"></div>
+      </div>
+
+      <!-- Frise procédurale 8 étapes -->
+      <div class="card stack-md">
+        <div class="sec-head" style="margin-bottom:0;">
+          <div>
+            <h2 class="sec-title">Frise procédurale du contrôle fiscal et du contentieux (CGI 2026)</h2>
+            <p class="sec-desc">Livre II du CGI — Procédures de vérification, commissions de recours, nullités et délai judiciaire.</p>
+          </div>
+          <span class="badge b-gold mono">Art. 212 à 242 CGI</span>
+        </div>
+        <div id="timeline-grid" class="tl-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <p class="footer-title">TaxRadar <span class="gold">DGI</span> — Conçu par Outislyt Youssef</p>
+        <p class="footer-bio">
+          Youssef Outislyt — Étudiant en 3ème année à l'École Nationale de Commerce et de Gestion (ENCG) de Marrakech, filière Contrôle, Audit et Conseil, et lauréat des Classes Préparatoires aux Grandes Écoles (CPGE) au Lycée Moulay Idriss de Fès.
+        </p>
+        <p class="footer-legal">
+          Outil indépendant de pré-diagnostic et d'analyse technique fondé sur le Code Général des Impôts (Édition 2026 — LF n° 50-25, Dahir n° 1-25-67 du 10 déc. 2025, B.O. n° 7465 bis du 16 déc. 2025) et la Loi n° 69-21 (B.O. n° 7204). Non affilié à la Direction Générale des Impôts (DGI). Traitement 100 % local dans votre navigateur.
+        </p>
+      </div>
+      <div class="no-print">
+        <a class="li-btn" href="https://www.linkedin.com/in/youssef-outislyt/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H19M8.34 17V10.67H6.23V17H8.34M7.28 9.79C7.98 9.79 8.54 9.22 8.54 8.52C8.54 7.82 7.98 7.25 7.28 7.25C6.59 7.25 6.02 7.82 6.02 8.52C6.02 9.22 6.59 9.79 7.28 9.79M17.77 17V13.45C17.77 11.7 17.39 10.35 15.35 10.35C14.37 10.35 13.71 10.89 13.44 11.4H13.41V10.67H11.39V17H13.5V13.86C13.5 13.03 13.66 12.23 14.68 12.23C15.69 12.23 15.7 13.17 15.7 13.91V17H17.77Z"/></svg>
+          Se connecter avec Outislyt Youssef
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    'use strict';
+
+    /* =========================================================================
+       1. CONFIGURATION LÉGALE CENTRALISÉE ET SOURCÉE (CGI 2026 & LOI 69-21)
+    ========================================================================= */
+    const FISCAL_CONFIG_2026 = Object.freeze({
+      refDateISO: '2026-11-22',
+      storage: { sim: 'taxradar_sim_v3', l69: 'taxradar_l69_v3' },
+      is: {
+        standard: { val: 0.20, source: 'CGI 2026 Art. 19-I-A' },
+        high:     { val: 0.35, source: 'CGI 2026 Art. 19-I-B & 247-XXXVII-A (bénéfice net >= 100 M MAD)' },
+        finance:  { val: 0.40, source: 'CGI 2026 Art. 19-I-C (établissements de crédit & assurances)' }
+      },
+      cm: { rate: 0.0025, minIS: 3000, source: 'CGI 2026 Art. 144-I-D' },
+      tva: { rates: [0.20, 0.10], source: 'CGI 2026 Art. 99 & 247-XXXXI (convergence achevée au 01/01/2026 vers 20% et 10%)' },
+      cashCaps: {
+        dailyTTC: 5000, monthlyTTC: 50000, sellerFineThreshold: 20000, sellerFineRate: 0.06,
+        source: 'CGI 2026 Art. 11-II, Art. 106-II & Art. 193'
+      },
+      dividends: {
+        rate2026: 0.1125, rate2027: 0.10,
+        source: 'CGI 2026 Art. 19-IV-B, Art. 247-XXXVII-C & Art. 163-II'
+      },
+      ras2026: {
+        rateIS: 0.05, rateTVAWithCert: 0.75, rateTVANoCert: 1.00,
+        threshold2026: 500000000, threshold2027: 350000000, threshold2028: 200000000,
+        source: 'CGI 2026 Art. 15 bis, 15 ter, 19-IV-A, 117-V, 157-I, 247-XXXXVI & LF 50-25 Art. 7-IV-1'
+      },
+      sanctions: {
+        art186Standard: 0.20, art186TvaRas: 0.30, art186BadFaith: 1.00,
+        art198BisFine: 2000, art208PenIS: 0.10, art208PenFast: 0.05, art208PenTvaRas: 0.20,
+        art208FirstMonth: 0.05, art208ExtraMonth: 0.005, art208CommissionCapMonths: 12,
+        source: 'CGI 2026 Art. 186-A/B, Art. 198, Art. 198 bis & Art. 208-I'
+      },
+      loi6921: {
+        minCA: 2000000, cacMinCA: 50000000, defaultDelay: 60, maxStdDelay: 120, maxSectDelay: 180,
+        extraMonthRate: 0.85, exemptCutoffISO: '2025-01-01', exemptMaxTTC: 10000,
+        missingInvoiceFine: 5000,
+        source: 'Loi n° 69-21 (B.O. n° 7204), Code de commerce Art. 78-1 à 78-10 & Art. 2',
+        brackets: [
+          { max: 2000000,   fine: 0,      transFine: 0,     label: '≤ 2 M MAD (Hors champ)', startISO: null },
+          { max: 10000000,  fine: 5000,   transFine: 20000, label: '> 2 M à 10 M MAD',       startISO: '2025-01-01' },
+          { max: 50000000,  fine: 12500,  transFine: 50000, label: '> 10 M à 50 M MAD',      startISO: '2024-01-01' },
+          { max: 200000000, fine: 50000,  transFine: 0,     label: '> 50 M à 200 M MAD',     startISO: '2023-07-01' },
+          { max: 500000000, fine: 125000, transFine: 0,     label: '> 200 M à 500 M MAD',    startISO: '2023-07-01' },
+          { max: Infinity,  fine: 250000, transFine: 0,     label: '> 500 M MAD',            startISO: '2023-07-01' }
+        ],
+        bamHistory: [
+          { fromISO: '2025-03-18', rate: 2.25 },
+          { fromISO: '2024-12-17', rate: 2.50 },
+          { fromISO: '2024-06-25', rate: 2.75 },
+          { fromISO: '2023-03-21', rate: 3.00 }
+        ]
+      }
+    });
+
+    /* =========================================================================
+       2. UTILITAIRES (ANTI-XSS, FORMATAGE, DATES UTC, STORAGE SANDBOX-SAFE)
+    ========================================================================= */
+    function escapeHTML(v) {
+      return String(v == null ? '' : v)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+    function normTxt(v) {
+      return String(v || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    }
+    function fmtNum(n) {
+      var x = Math.round(Number(n) || 0);
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    }
+    function fmtMAD(n) { return fmtNum(n) + ' MAD'; }
+    function round100(n) { var x = Number(n) || 0; return x <= 0 ? 0 : Math.round(x / 100) * 100; }
+    function fmtRange(lo, hi) {
+      var a = round100(lo), b = round100(hi);
+      if (a === 0 && b === 0) return '0 MAD';
+      return a === b ? fmtMAD(a) : fmtNum(a) + ' – ' + fmtMAD(b);
+    }
+    function parseNum(raw) {
+      var c = String(raw || '').replace(/\s+/g, '').replace(',', '.');
+      var n = parseFloat(c);
+      return Number.isFinite(n) && n >= 0 ? n : 0;
+    }
+    function parseUTC(raw) {
+      if (!raw) return null;
+      var s = String(raw).trim(), y, m, d;
+      var iso = /^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(s);
+      var fr  = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(s);
+      if (iso) { y = +iso[1]; m = +iso[2]; d = +iso[3]; }
+      else if (fr) { d = +fr[1]; m = +fr[2]; y = +fr[3]; }
+      else return null;
+      if (y < 2000 || y > 2100 || m < 1 || m > 12 || d < 1 || d > 31) return null;
+      var ms = Date.UTC(y, m - 1, d), dt = new Date(ms);
+      return (dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d) ? ms : null;
+    }
+    function fmtFR(ms) {
+      var d = new Date(ms);
+      return String(d.getUTCDate()).padStart(2, '0') + '/' + String(d.getUTCMonth() + 1).padStart(2, '0') + '/' + d.getUTCFullYear();
+    }
+    function fmtISO(ms) {
+      var d = new Date(ms);
+      return d.getUTCFullYear() + '-' + String(d.getUTCMonth() + 1).padStart(2, '0') + '-' + String(d.getUTCDate()).padStart(2, '0');
+    }
+    function addDays(ms, days) { return ms + days * 86400000; }
+    function diffDays(a, b) { return Math.round((b - a) / 86400000); }
+    function endOfMonthUTC(ms) {
+      var d = new Date(ms);
+      return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0);
+    }
+    function saveLS(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+    function loadLS(k) { try { var r = localStorage.getItem(k); return r ? JSON.parse(r) : null; } catch (e) { return null; } }
+
+    function toast(msg, type) {
+      var r = document.getElementById('toast-region');
+      if (!r) return;
+      var el = document.createElement('div');
+      el.className = 'toast t-' + (type || 'info');
+      el.textContent = msg;
+      r.appendChild(el);
+      setTimeout(function() {
+        el.style.opacity = '0'; el.style.transition = 'opacity 0.2s ease';
+        setTimeout(function() { el.remove(); }, 220);
+      }, 3200);
+    }
+
+    function copyText(txt, okMsg) {
+      var copied = false;
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        copied = document.execCommand('copy');
+        document.body.removeChild(ta);
+      } catch (e) { copied = false; }
+      if (copied) { toast(okMsg || 'Copié dans le presse-papiers.', 'success'); return; }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(txt)
+          .then(function() { toast(okMsg || 'Copié dans le presse-papiers.', 'success'); })
+          .catch(function() { toast('Copie bloquée par le navigateur.', 'error'); });
+      } else { toast('Copie non supportée.', 'error'); }
+    }
+
+    function downloadFile(content, filename, mime) {
+      var blob = new Blob([content], { type: mime });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = filename;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function piecewise(x, pts) {
+      if (x <= pts[0][0]) return pts[0][1];
+      for (var i = 1; i < pts.length; i++) {
+        if (x <= pts[i][0]) {
+          var t = (x - pts[i - 1][0]) / (pts[i][0] - pts[i - 1][0]);
+          return pts[i - 1][1] + t * (pts[i][1] - pts[i - 1][1]);
+        }
+      }
+      return pts[pts.length - 1][1];
+    }
+
+    /* =========================================================================
+       3. NAVIGATION DES 4 ONGLETS (PRIORITAIRE)
+    ========================================================================= */
+    function setActiveTab(id) {
+      var btns = document.querySelectorAll('.tab-btn[data-tab]');
+      for (var i = 0; i < btns.length; i++) {
+        var on = btns[i].getAttribute('data-tab') === id;
+        if (on) { btns[i].setAttribute('aria-current', 'true'); } else { btns[i].removeAttribute('aria-current'); }
+        if (on && btns[i].scrollIntoView) {
+          /* garde le bouton actif visible si la barre défile horizontalement */
+          var nav = btns[i].parentNode;
+          if (nav.scrollWidth > nav.clientWidth) nav.scrollLeft = btns[i].offsetLeft - (nav.clientWidth - btns[i].offsetWidth) / 2;
+        }
+      }
+    }
+    function updateHeaderOffset() {
+      var h = document.querySelector('.site-header');
+      if (h) document.documentElement.style.setProperty('--header-h', (h.offsetHeight + 12) + 'px');
+    }
+    function scrollToSection(id) {
+      var el = document.getElementById('tab-' + id);
+      if (!el) return;
+      updateHeaderOffset();
+      setActiveTab(id);
+      lockSpy = true;
+      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', '#tab-' + id);
+      clearTimeout(lockTimer);
+      lockTimer = setTimeout(function() { lockSpy = false; spyTabs(); }, 800);
+    }
+    var lockSpy = false, lockTimer = null;
+    function spyTabs() {
+      if (lockSpy) return;
+      var panels = document.querySelectorAll('.tab-panel');
+      var line = (document.querySelector('.site-header') ? document.querySelector('.site-header').offsetHeight : 0) + 80;
+      var current = panels.length ? panels[0].id : null;
+      for (var i = 0; i < panels.length; i++) {
+        if (panels[i].getBoundingClientRect().top <= line) current = panels[i].id;
+      }
+      /* en bas de page, la dernière section est considérée active */
+      if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4 && panels.length) current = panels[panels.length - 1].id;
+      if (current) setActiveTab(current.replace('tab-', ''));
+    }
+    function bindTabs() {
+      var btns = document.querySelectorAll('.tab-btn[data-tab]');
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', function(ev) {
+          ev.preventDefault();
+          scrollToSection(ev.currentTarget.getAttribute('data-tab'));
+        });
+      }
+      var ticking = false;
+      window.addEventListener('scroll', function() {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(function() { spyTabs(); ticking = false; });
+      }, { passive: true });
+      window.addEventListener('resize', updateHeaderOffset);
+      updateHeaderOffset();
+      var initHash = (window.location.hash || '').replace(/^#/, '');
+      if (initHash) {
+        var normId = initHash.replace(/^tab-/, '');
+        if (document.getElementById('tab-' + normId)) {
+          setActiveTab(normId);
+          setTimeout(function() { scrollToSection(normId); }, 60);
+          return;
+        }
+      }
+      spyTabs();
+    }
+
+    /* =========================================================================
+       4. HELPERS MÉTIER COMMUNS
+    ========================================================================= */
+    function getL69Bracket(ca) {
+      var list = FISCAL_CONFIG_2026.loi6921.brackets;
+      for (var i = 0; i < list.length; i++) if (ca <= list[i].max) return list[i];
+      return list[list.length - 1];
+    }
+    function getL69Visa(ca) {
+      if (ca <= FISCAL_CONFIG_2026.loi6921.minCA) return 'Non requis (hors champ)';
+      return ca >= FISCAL_CONFIG_2026.loi6921.cacMinCA ? 'Commissaire aux comptes (CAC)' : 'Expert-comptable / Comptable agréé';
+    }
+    function getBAMRate(utcMs) {
+      var h = FISCAL_CONFIG_2026.loi6921.bamHistory;
+      for (var i = 0; i < h.length; i++) if (utcMs >= parseUTC(h[i].fromISO)) return h[i].rate;
+      return h[h.length - 1].rate;
+    }
+
+    /* =========================================================================
+       5. MODULE 1 : SIMULATEUR FISCAL (EXACTEMENT 100 PTS, 0 CONTRADICTION)
+    ========================================================================= */
+    const PRESETS = {
+      conforme:  { ca: 12000000, special: false, tvaGap: 0.5, deficits: 0, noEtat: false, caisse: 'normale',   caisseAmt: 850000, marge: 2,  cash: 0,      ccaOn: false, ccaAmt: 250000, l69: false, loyersPP: false, ras: false },
+      vigilance: { ca: 18000000, special: false, tvaGap: 5.0, deficits: 3, noEtat: false, caisse: 'eleve',     caisseAmt: 900000, marge: 12, cash: 180000, ccaOn: false, ccaAmt: 250000, l69: true,  loyersPP: false, ras: false },
+      critique:  { ca: 30000000, special: false, tvaGap: 14,  deficits: 4, noEtat: true,  caisse: 'crediteur', caisseAmt: 850000, marge: 22, cash: 450000, ccaOn: true,  ccaAmt: 350000, l69: true,  loyersPP: true,  ras: true  }
+    };
+
+    // Total strict = 18 + 14 + 22 + 14 + 12 + 10 + 10 = 100 pts (fonctions continues)
+    function computeScore(st) {
+      var in69 = st.ca > FISCAL_CONFIG_2026.loi6921.minCA;
+      var inRAS = st.special || st.ca >= FISCAL_CONFIG_2026.ras2026.threshold2026 || st.loyersPP;
+      var sTva = piecewise(st.tvaGap, [[0, 0], [2, 1.8], [8, 10], [20, 18]]);
+      var sDef = piecewise(st.deficits, [[0, 0], [2, 3], [4, 7.5], [6, 11]]) + (st.noEtat && st.deficits > 0 ? 3 : 0);
+      sDef = Math.min(14, sDef);
+      var sCaisse = st.caisse === 'crediteur' ? 22 : (st.caisse === 'eleve' ? piecewise(st.caisseAmt, [[500000, 6], [1500000, 9.5], [3000000, 12]]) : 0);
+      var sMarge = piecewise(st.marge, [[0, 0], [10, 4.5], [20, 10], [30, 14]]);
+      var sCash = piecewise(st.cash, [[0, 0], [150000, 4.5], [500000, 9], [1000000, 12]]);
+      var sCCA = (st.ccaOn && st.ccaAmt > 0) ? piecewise(st.ccaAmt, [[1, 3.5], [150000, 6.5], [500000, 9], [1000000, 10]]) : 0;
+      var sObl = (in69 && st.l69 ? 5 : 0) + (inRAS && st.ras ? 5 : 0);
+      var total = Math.min(100, Math.round(sTva + sDef + sCaisse + sMarge + sCash + sCCA + sObl));
+      var axes = [
+        Math.round((sTva / 18) * 100),
+        Math.round((sCaisse / 22) * 100),
+        Math.round((sCash / 12) * 100),
+        Math.round(((sDef + sMarge) / 28) * 100),
+        Math.round((sCCA / 10) * 100),
+        Math.round((sObl / 10) * 100)
+      ];
+      return { total: total, axes: axes, p: { sTva: sTva, sDef: sDef, sCaisse: sCaisse, sMarge: sMarge, sCash: sCash, sCCA: sCCA, sObl: sObl } };
+    }
+
+    function readSim() {
+      var cr = document.querySelector('input[name="caisse-state"]:checked');
+      return {
+        ca: parseNum(document.getElementById('sim-ca').value),
+        special: document.getElementById('sim-special').checked,
+        tvaGap: parseFloat(document.getElementById('sim-tva-gap').value) || 0,
+        deficits: parseInt(document.getElementById('sim-deficits').value, 10) || 0,
+        noEtat: document.getElementById('sim-no-etat').checked,
+        caisse: cr ? cr.value : 'normale',
+        caisseAmt: Math.max(500001, parseFloat(document.getElementById('sim-caisse-amt').value) || 850000),
+        marge: parseInt(document.getElementById('sim-marge').value, 10) || 0,
+        cash: Math.max(0, parseFloat(document.getElementById('sim-cash').value) || 0),
+        ccaOn: document.getElementById('sim-cca-on').checked,
+        ccaAmt: Math.max(0, parseFloat(document.getElementById('sim-cca-amt').value) || 0),
+        l69: document.getElementById('sim-6921').checked,
+        loyersPP: document.getElementById('sim-loyers-pp').checked,
+        ras: document.getElementById('sim-ras').checked,
+        hyp: {
+          isRate: parseFloat(document.getElementById('hyp-is').value) || 0.20,
+          tvaRate: parseFloat(document.getElementById('hyp-tva').value) || 0.20,
+          art186: parseFloat(document.getElementById('hyp-186').value) || 0.30,
+          years: parseInt(document.getElementById('hyp-years').value, 10) || 1,
+          months: Math.max(1, Math.min(48, parseInt(document.getElementById('hyp-months').value, 10) || 12)),
+          reconst: (parseInt(document.getElementById('hyp-reconst').value, 10) || 5) / 100,
+          commSusp: document.getElementById('hyp-comm-susp').checked,
+          fastPay: document.getElementById('hyp-fast-pay').checked,
+          badFaith: document.getElementById('hyp-bad-faith').checked
+        }
+      };
+    }
+
+    function writeSim(st) {
+      document.getElementById('sim-ca').value = fmtNum(st.ca);
+      document.getElementById('sim-special').checked = !!st.special;
+      document.getElementById('sim-tva-gap').value = st.tvaGap;
+      document.getElementById('sim-deficits').value = st.deficits;
+      document.getElementById('sim-no-etat').checked = !!st.noEtat;
+      var r = document.querySelector('input[name="caisse-state"][value="' + (st.caisse || 'normale') + '"]');
+      if (r) r.checked = true;
+      document.getElementById('sim-caisse-amt').value = st.caisseAmt || 850000;
+      document.getElementById('sim-marge').value = st.marge;
+      document.getElementById('sim-cash').value = st.cash || 0;
+      document.getElementById('sim-cca-on').checked = !!st.ccaOn;
+      document.getElementById('sim-cca-amt').value = st.ccaAmt || 250000;
+      document.getElementById('sim-6921').checked = !!st.l69;
+      document.getElementById('sim-loyers-pp').checked = !!st.loyersPP;
+      document.getElementById('sim-ras').checked = !!st.ras;
+      if (st.hyp) {
+        document.getElementById('hyp-is').value = String(st.hyp.isRate != null ? st.hyp.isRate : 0.20);
+        document.getElementById('hyp-tva').value = String(st.hyp.tvaRate != null ? st.hyp.tvaRate : 0.20);
+        document.getElementById('hyp-186').value = String(st.hyp.art186 != null ? st.hyp.art186 : 0.30);
+        document.getElementById('hyp-years').value = String(st.hyp.years != null ? st.hyp.years : 1);
+        document.getElementById('hyp-months').value = String(st.hyp.months != null ? st.hyp.months : 12);
+        document.getElementById('hyp-reconst').value = String(Math.round((st.hyp.reconst != null ? st.hyp.reconst : 0.05) * 100));
+        document.getElementById('hyp-comm-susp').checked = !!st.hyp.commSusp;
+        document.getElementById('hyp-fast-pay').checked = !!st.hyp.fastPay;
+        document.getElementById('hyp-bad-faith').checked = !!st.hyp.badFaith;
+      }
+    }
+
+    function drawGauge(score, hex) {
+      var r = 82, cx = 110, cy = 102, len = Math.PI * r, off = len * (1 - score / 100);
+      document.getElementById('gauge-wrap').innerHTML =
+        '<svg viewBox="0 0 220 120" width="100%" style="height:auto;" role="img" aria-label="Indice d\'exposition : ' + score + ' sur 100">' +
+          '<path d="M ' + (cx - r) + ' ' + cy + ' A ' + r + ' ' + r + ' 0 0 1 ' + (cx + r) + ' ' + cy + '" fill="none" stroke="#1F2937" stroke-width="14" stroke-linecap="round"/>' +
+          '<path d="M ' + (cx - r) + ' ' + cy + ' A ' + r + ' ' + r + ' 0 0 1 ' + (cx + r) + ' ' + cy + '" fill="none" stroke="' + hex + '" stroke-width="14" stroke-linecap="round" stroke-dasharray="' + len.toFixed(1) + '" stroke-dashoffset="' + off.toFixed(1) + '"/>' +
+          '<text x="' + cx + '" y="' + (cy - 18) + '" text-anchor="middle" fill="#F8FAFC" font-family="ui-monospace,monospace" font-size="32" font-weight="700">' + score + '</text>' +
+          '<text x="' + cx + '" y="' + (cy + 3) + '" text-anchor="middle" fill="#94A3B8" font-family="ui-monospace,monospace" font-size="12">sur 100 pts</text>' +
+        '</svg>';
+    }
+
+    function drawRadar(axes, stroke, fill) {
+      var lbls = ['TVA / CA', 'Caisse 5161', 'Espèces', 'Défic./Marge', 'CCA 3463', 'Déclaratif'];
+      var cx = 158, cy = 112, maxR = 70, step = (Math.PI * 2) / 6;
+      function pt(i, ratio) {
+        var a = -Math.PI / 2 + i * step;
+        return [cx + Math.cos(a) * maxR * ratio, cy + Math.sin(a) * maxR * ratio];
+      }
+      var rings = [0.25, 0.5, 0.75, 1].map(function(lv) {
+        return '<polygon points="' + lbls.map(function(_, i) { var p = pt(i, lv); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ') + '" fill="none" stroke="#243047" stroke-width="1"/>';
+      }).join('');
+      var spokes = lbls.map(function(_, i) {
+        var p = pt(i, 1);
+        return '<line x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '" stroke="#243047" stroke-width="1"/>';
+      }).join('');
+      var dPts = axes.map(function(v, i) { return pt(i, Math.max(0.05, v / 100)); });
+      var poly = dPts.map(function(p) { return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+      var dots = dPts.map(function(p, i) {
+        return '<circle cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="3.5" fill="' + stroke + '" stroke="#090E1A" stroke-width="1.5"><title>' + lbls[i] + ' : ' + axes[i] + ' %</title></circle>';
+      }).join('');
+      var texts = lbls.map(function(l, i) {
+        var p = pt(i, 1.24), anc = (i === 1 || i === 2) ? 'start' : (i === 4 || i === 5) ? 'end' : 'middle';
+        var dy = i === 0 ? -2 : (i === 3 ? 11 : 4);
+        return '<text x="' + p[0].toFixed(1) + '" y="' + (p[1] + dy).toFixed(1) + '" text-anchor="' + anc + '" fill="#CBD5E1" font-size="12" font-family="-apple-system,sans-serif">' + l + '</text>';
+      }).join('');
+      document.getElementById('radar-wrap').innerHTML =
+        '<svg viewBox="0 0 316 226" width="100%" style="max-width:320px;height:auto;" role="img" aria-label="Radar d\'exposition sur 6 axes">' +
+          rings + spokes + '<polygon points="' + poly + '" fill="' + fill + '" stroke="' + stroke + '" stroke-width="2"/>' + dots + texts +
+        '</svg>';
+    }
+
+    function updateSimulator() {
+      var st = readSim();
+      var br = getL69Bracket(st.ca);
+      var in69 = st.ca > FISCAL_CONFIG_2026.loi6921.minCA;
+      var inRAS = st.special || st.ca >= FISCAL_CONFIG_2026.ras2026.threshold2026 || st.loyersPP;
+
+      document.getElementById('reg-6921').textContent = in69 ? br.label + ' (' + fmtMAD(br.fine) + ')' : 'Hors champ (≤ 2 M)';
+      document.getElementById('reg-visa').textContent = getL69Visa(st.ca);
+      document.getElementById('reg-comm').textContent = st.ca >= 10000000 ? 'CNRF (Art. 226 — CA ≥ 10 M)' : 'CRRF (Art. 225 bis — CA < 10 M)';
+      document.getElementById('reg-ras').textContent = inRAS
+        ? (st.loyersPP && !st.special && st.ca < 500000000 ? 'Loyers PP RNR/RNS (sans seuil CA)' : 'Applicable (palier ≥ 500 M / statut)')
+        : (st.ca >= 350000000 ? 'Prochain palier : 01/01/2027 (≥ 350 M)' : st.ca >= 200000000 ? 'Palier ultérieur : 01/01/2028 (≥ 200 M)' : 'Hors champ (seuil 500 M en 2026)');
+
+      var c69 = document.getElementById('sim-6921'), r69 = document.getElementById('row-6921');
+      c69.disabled = !in69; r69.classList.toggle('disabled', !in69);
+      if (!in69) { c69.checked = false; st.l69 = false; }
+      document.getElementById('desc-6921').textContent = in69
+        ? 'Tranche ' + br.label + ' : amende forfaitaire de ' + fmtMAD(br.fine) + ' par défaut/retard déclaratif (Art. 78-6).'
+        : 'Désactivé : CA HT ≤ 2 000 000 MAD (hors champ Art. 78-1).';
+
+      var cRas = document.getElementById('sim-ras'), rRas = document.getElementById('row-ras');
+      cRas.disabled = !inRAS; rRas.classList.toggle('disabled', !inRAS);
+      if (!inRAS) { cRas.checked = false; st.ras = false; }
+      document.getElementById('desc-ras').textContent = inRAS
+        ? 'Actif : RAS non versée soumise à Art. 198 + Art. 208 (pénalité 20 % + retard, sans cumul Art. 186).'
+        : 'Désactivé : hors seuil 500 M MAD (01/07/2026). Prochaine marche : 350 M le 01/01/2027 (Art. 247-XXXXVI).';
+
+      document.getElementById('wrap-caisse-amt').style.display = st.caisse === 'eleve' ? 'block' : 'none';
+      document.getElementById('wrap-cca-amt').style.display = st.ccaOn ? 'block' : 'none';
+
+      document.getElementById('val-tva-gap').textContent = st.tvaGap.toFixed(1).replace('.', ',') + ' %';
+      document.getElementById('val-deficits').textContent = st.deficits + (st.deficits > 1 ? ' exercices' : ' exercice');
+      document.getElementById('val-marge').textContent = st.marge > 0 ? '-' + st.marge + ' pts' : '0 pt';
+      document.getElementById('val-hyp-reconst').textContent = Math.round(st.hyp.reconst * 100) + ' %';
+
+      var m = computeScore(st);
+      document.getElementById('val-caisse-pts').textContent = Math.round(m.p.sCaisse) + ' / 22 pts';
+      document.getElementById('val-cash-pts').textContent = Math.round(m.p.sCash) + ' / 12 pts';
+      document.getElementById('val-cca-pts').textContent = Math.round(m.p.sCCA) + ' / 10 pts';
+      document.getElementById('val-oblig-pts').textContent = Math.round(m.p.sObl) + ' / 10 pts';
+
+      var signals = [], annIS = 0, annTVA = 0, annRASRectif = 0, annRASUnrem = 0, fixedFines = 0;
+
+      // 1. Écart TVA
+      if (st.tvaGap > 2) {
+        var gapCA = st.ca * ((st.tvaGap - 2) / 100);
+        var tvaRec = gapCA * st.hyp.tvaRate;
+        annTVA += tvaRec;
+        signals.push({
+          sev: st.tvaGap >= 8 ? 'critique' : 'eleve',
+          sevLbl: st.tvaGap >= 8 ? 'Critique' : 'Élevé',
+          ord: st.tvaGap >= 8 ? 1 : 2,
+          title: 'Écart CA comptable / CA déclaré TVA (' + st.tvaGap.toFixed(1).replace('.', ',') + ' %)',
+          ref: 'CGNC 711/712 & 4455 • Art. 95, 110, 111 & 221 bis-III CGI',
+          risk: 'Exposition à une demande d\'éclaircissements (Art. 221 bis-III) puis rappel de TVA estimé à ' + fmtMAD(round100(tvaRec)) + '/an au taux de ' + Math.round(st.hyp.tvaRate * 100) + ' % (seuil de 2 % = heuristique d\'audit).',
+          action: 'Établir un tableau de rapprochement mensuel documenté (créances clients 3421, avances 4421, exonérations Art. 91/92, avoirs). Toute correction comptable doit être documentée et tracée, jamais rétroactive.'
+        });
+      }
+
+      // 2. Déficits
+      if (st.deficits >= 3 || (st.noEtat && st.deficits > 0)) {
+        if (st.noEtat && st.deficits > 0) fixedFines += FISCAL_CONFIG_2026.sanctions.art198BisFine;
+        signals.push({
+          sev: st.deficits >= 4 ? 'eleve' : 'modere',
+          sevLbl: st.deficits >= 4 ? 'Élevé' : 'Modéré',
+          ord: st.deficits >= 4 ? 2 : 3,
+          title: 'Déficits fiscaux consécutifs (' + st.deficits + ' exercice' + (st.deficits > 1 ? 's' : '') + ')',
+          ref: 'Art. 12, Art. 20-IV, Art. 198 bis & Art. 232-III CGI',
+          risk: 'En cas d\'imputation de déficits issus d\'exercices prescrits, contrôle étendu aux 4 exercices prescrits mais redressement plafonné aux déficits imputés (Art. 232-III). ' + (st.noEtat ? 'Défaut d\'état explicatif : amende de 2 000 MAD après mise en demeure préalable de 15 jours (Art. 198 bis).' : ''),
+          action: 'Joindre l\'état explicatif signé (Art. 20-IV), distinguer la part amortissements (reportable sans limite de durée, Art. 12) et vérifier la cotisation minimale due (Art. 144).'
+        });
+      }
+
+      // 3. Caisse 5161
+      if (st.caisse === 'crediteur') {
+        var rCA = st.ca * st.hyp.reconst;
+        var rIS = rCA * st.hyp.isRate, rTVA = rCA * st.hyp.tvaRate;
+        annIS += rIS; annTVA += rTVA;
+        signals.push({
+          sev: 'critique', sevLbl: 'Critique', ord: 1,
+          title: 'Compte Caisse (5161) en solde créditeur',
+          ref: 'CGNC 5161 • Art. 145 & Art. 213-I-4° CGI',
+          risk: 'Les soldes créditeurs répétés caractérisent des erreurs graves affectant la valeur probante de la comptabilité (Art. 213-I-4°). Hypothèse de reconstitution de ' + Math.round(st.hyp.reconst * 100) + ' % du CA : ' + fmtMAD(round100(rIS + rTVA)) + '/an de droits en principal.',
+          action: 'Instaurer un arrêté physique quotidien signé et identifier les erreurs d\'imputation (avances dirigeants non comptabilisées). Toute régularisation doit être documentée et non rétroactive.'
+        });
+      } else if (st.caisse === 'eleve') {
+        signals.push({
+          sev: 'eleve', sevLbl: 'Élevé', ord: 2,
+          title: 'Solde espèces important en caisse (' + fmtMAD(st.caisseAmt) + ')',
+          ref: 'CGNC 5161 • Art. 210 (droit de constatation) & Art. 213-I CGI',
+          risk: 'Risque d\'écart lors d\'une constatation matérielle inopinée sur place (Art. 210) et questionnement sur l\'origine ou la réalité des mouvements espèces.',
+          action: 'Formaliser un PV d\'inventaire de caisse à la clôture, déposer les excédents en banque et rapprocher chaque sortie de sa pièce justificative.'
+        });
+      }
+
+      // 4. Marge brute
+      if (st.marge >= 10) {
+        signals.push({
+          sev: st.marge >= 20 ? 'eleve' : 'modere',
+          sevLbl: st.marge >= 20 ? 'Élevé' : 'Modéré',
+          ord: st.marge >= 20 ? 2 : 3,
+          title: 'Marge brute inférieure de ' + st.marge + ' pts à la moyenne sectorielle',
+          ref: 'CPC 711/611 • Art. 145-II, Art. 213-I & Art. 213-II/III CGI',
+          risk: 'Indicateur analytique susceptible d\'orienter un contrôle. Hors irrégularités graves (Art. 213-I), la charge de la preuve de l\'insuffisance pèse sur l\'administration ; la comparaison sectorielle est visée aux Art. 213-II/III.',
+          action: 'Documenter les inventaires détaillés de stocks en quantités et valeurs (Art. 145-II), les remises accordées, démarques et évolutions des coûts matières.'
+        });
+      }
+
+      // 5. Espèces Art. 11-II & 106-II
+      if (st.cash > 0) {
+        var excHT = st.cash / (1 + st.hyp.tvaRate);
+        var rejIS = excHT * st.hyp.isRate;
+        var rejTVA = st.cash * (st.hyp.tvaRate / (1 + st.hyp.tvaRate));
+        annIS += rejIS; annTVA += rejTVA;
+        signals.push({
+          sev: st.cash >= 300000 ? 'critique' : 'eleve',
+          sevLbl: st.cash >= 300000 ? 'Critique' : 'Élevé',
+          ord: st.cash >= 300000 ? 1 : 2,
+          title: 'Excédent de règlements espèces TTC (' + fmtMAD(st.cash) + ')',
+          ref: 'Art. 11-II, Art. 106-II & Art. 193 CGI 2026',
+          risk: 'Réintégration IS sur la base HT de l\'excédent (' + fmtMAD(round100(excHT)) + ' → ' + fmtMAD(round100(rejIS)) + ' d\'IS) et exclusion de déduction TVA sur la taxe incluse (' + fmtMAD(round100(rejTVA)) + '). Côté vendeur : amende de 6 % dès 20 000 MAD encaissés en espèces (Art. 193).',
+          action: 'Extraire les cumuls journaliers (> 5 000 MAD TTC) et mensuels (> 50 000 MAD TTC) par fournisseur avant clôture, réintégrer au Tableau 3 et imposer le règlement bancaire traçable.'
+        });
+      }
+
+      // 6. CCA débiteur 3463
+      if (st.ccaOn && st.ccaAmt > 0) {
+        var rasDiv = st.ccaAmt * FISCAL_CONFIG_2026.dividends.rate2026;
+        annRASRectif += rasDiv;
+        signals.push({
+          sev: st.ccaAmt >= 150000 ? 'critique' : 'eleve',
+          sevLbl: st.ccaAmt >= 150000 ? 'Critique' : 'Élevé',
+          ord: st.ccaAmt >= 150000 ? 1 : 2,
+          title: 'Compte Courant d\'Associé (3463) débiteur (' + fmtMAD(st.ccaAmt) + ')',
+          ref: 'CGNC 3463 • Art. 13-VII, Art. 19-IV-B, Art. 247-XXXVII-C & Art. 163-II CGI',
+          risk: 'Avance juridiquement interdite aux associés personnes physiques (SARL/SA). Hypothèse d\'audit de requalification en distribution occulte (Art. 13-VII) au taux de 11,25 % en 2026 (10 % dès 2027 selon Art. 163-II), soit ' + fmtMAD(round100(rasDiv)) + '.',
+          action: 'Apurer le compte par remboursement bancaire effectif avant la clôture ou formaliser en assemblée générale une distribution régulière de dividendes.'
+        });
+      }
+
+      // 7a. Loi 69-21
+      if (in69 && st.l69) {
+        fixedFines += br.fine;
+        signals.push({
+          sev: 'eleve', sevLbl: 'Élevé', ord: 2,
+          title: 'Retard ou défaut de déclaration — Loi n° 69-21',
+          ref: 'Art. 78-4 & Art. 78-6 Code de commerce (Loi 69-21)',
+          risk: 'Amende forfaitaire de ' + fmtMAD(br.fine) + ' par défaut ou retard de déclaration pour la tranche ' + br.label + ', en sus de 5 000 MAD par facture omise/discordante.',
+          action: 'Contrôler la balance âgée dans l\'onglet Loi 69-21, isoler les litiges judiciaires (Art. 78-3) et obtenir le visa obligatoire (' + getL69Visa(st.ca) + ').'
+        });
+      }
+
+      // 7b. RAS LF 2026 (Art. 198 + Art. 208 uniquement, SANS Art. 186)
+      if (inRAS && st.ras) {
+        var onlyLoyersPP = st.loyersPP && !st.special && st.ca < FISCAL_CONFIG_2026.ras2026.threshold2026;
+        var rasRatePct = onlyLoyersPP ? 0.01 : 0.02; // Hypothèse outil : 1 % du CA en loyers PP RNR/RNS, sinon 2 % prestations/loyers
+        var rasBase = st.ca * rasRatePct;
+        var rasAmt = rasBase * FISCAL_CONFIG_2026.ras2026.rateIS;
+        annRASUnrem += rasAmt;
+        signals.push({
+          sev: 'eleve', sevLbl: 'Élevé', ord: 2,
+          title: onlyLoyersPP ? 'Défaut de RAS 5 % sur loyers versés aux PP (RNR / RNS)' : 'Défaut d\'application de la RAS LF 2026',
+          ref: onlyLoyersPP ? 'Art. 4-V, 15 ter, 73-II-A, 157-I (2e tiret), 198 & 208 CGI 2026' : 'Art. 15 bis, 15 ter, 19-IV-A, 117-V, 157-I, 198 & 208 CGI 2026',
+          risk: 'Le payeur demeure personnellement redevable des sommes non versées, majorées de la pénalité de 20 % et des majorations de retard (Art. 198 & 208, sans cumul Art. 186). Estimation conventionnelle arbitraire d\'outil sur assiette fixée à ' + (onlyLoyersPP ? '1 % du CA (loyers PP RNR/RNS)' : '2 % du CA (prestations/loyers)') + ' : ' + fmtMAD(round100(rasAmt)) + '/an en principal.',
+          action: onlyLoyersPP
+            ? 'Confirmer par circulaire DGI ou expert-comptable l\'application sans seuil de CA (lecture littérale Art. 157-I 2e tiret vs calendrier Art. 247-XXXXVI), appliquer la RAS de 5 % si exigible et déposer l\'état récapitulatif annuel (Art. 151-V).'
+            : 'Paramétrer l\'ERP (palier 500 M en vigueur, prochain palier 350 M au 01/01/2027 ; loyers versés aux PP RNR/RNS sans seuil de CA dès le 01/07/2026) et exiger les attestations de régularité fiscale (< 6 mois) pour la RAS TVA 75 % vs 100 %.'
+        });
+      }
+
+      // Calcul des fourchettes financières
+      var yrs = st.hyp.years;
+      var totIS = annIS * yrs, totTVA = annTVA * yrs;
+      var totRASRec = annRASRectif * yrs, totRASUn = annRASUnrem * yrs;
+      var principal = totIS + totTVA + totRASRec + totRASUn;
+      var cmRepere = Math.max(FISCAL_CONFIG_2026.cm.minIS, st.ca * FISCAL_CONFIG_2026.cm.rate);
+
+      var effMonths = st.hyp.commSusp ? Math.min(st.hyp.months, FISCAL_CONFIG_2026.sanctions.art208CommissionCapMonths) : st.hyp.months;
+      var delayRate = FISCAL_CONFIG_2026.sanctions.art208FirstMonth + Math.max(0, effMonths - 1) * FISCAL_CONFIG_2026.sanctions.art208ExtraMonth;
+      var penISRate = st.hyp.fastPay ? FISCAL_CONFIG_2026.sanctions.art208PenFast : FISCAL_CONFIG_2026.sanctions.art208PenIS;
+      var art208 = totIS * (penISRate + delayRate) + (totTVA + totRASRec + totRASUn) * (FISCAL_CONFIG_2026.sanctions.art208PenTvaRas + delayRate);
+
+      var base186 = totIS + totTVA + totRASRec; // Jamais sur totRASUn (Art. 198)
+      var art186Lo = base186 * st.hyp.art186;
+      var art186Hi = st.hyp.badFaith ? base186 * FISCAL_CONFIG_2026.sanctions.art186BadFaith : art186Lo;
+
+      var penLo = art186Lo + art208, penHi = art186Hi + art208;
+      var globLo = principal + penLo + fixedFines, globHi = principal + penHi + fixedFines;
+
+      // Verdict + règle plancher anti-contradiction
+      var hasCrit = signals.some(function(s) { return s.sev === 'critique'; });
+      var caisseCrit = st.caisse === 'crediteur';
+      var vTxt = 'Profil conforme', vNote = 'Les signaux simulés restent sous les seuils de vigilance paramétrés.';
+      var hex = '#10B981', rgba = 'rgba(16,185,129,0.22)';
+      var vStyle = 'background:var(--green-bg);border-color:var(--green-bd);color:var(--green-l);';
+
+      if (m.total >= 60 || caisseCrit) {
+        vTxt = (caisseCrit && m.total < 60) ? 'Exposition élevée — Point critique (Caisse 5161)' : 'Exposition élevée';
+        vNote = 'Présence d\'une irrégularité critique ou cumul important de signaux nécessitant une mise en conformité prioritaire.';
+        hex = '#EF4444'; rgba = 'rgba(239,68,68,0.22)';
+        vStyle = 'background:var(--red-bg);border-color:var(--red-bd);color:var(--red-l);';
+      } else if (m.total >= 30 || hasCrit) {
+        vTxt = (hasCrit && m.total < 30) ? 'Zone de vigilance — Point critique' : 'Zone de vigilance';
+        vNote = 'Des écarts ou un signal critique isolé empêchent un classement favorable sans justification documentaire.';
+        hex = '#F59E0B'; rgba = 'rgba(245,158,11,0.22)';
+        vStyle = 'background:var(--amber-bg);border-color:var(--amber-bd);color:var(--amber-l);';
+      }
+
+      drawGauge(m.total, hex);
+      drawRadar(m.axes, hex, rgba);
+      document.getElementById('sig-count-badge').textContent = signals.length + (signals.length > 1 ? ' signaux' : ' signal');
+      var vb = document.getElementById('verdict-box');
+      vb.textContent = vTxt;
+      vb.setAttribute('style', 'width:100%;margin-top:8px;padding:10px 12px;border-radius:var(--r-sm);font-size:13px;font-weight:600;border:1px solid;' + vStyle);
+      document.getElementById('verdict-note').textContent = vNote;
+
+      document.getElementById('exp-hyp-line').textContent =
+        'IS ' + Math.round(st.hyp.isRate * 100) + ' % • TVA ' + Math.round(st.hyp.tvaRate * 100) + ' % • Art. 186-A ' + Math.round(st.hyp.art186 * 100) + ' % • ' + yrs + ' ex. • retard ' + effMonths + ' mois' + (st.hyp.commSusp ? ' (plafonné Art. 208-I)' : '') + (st.hyp.badFaith ? ' • 186-B 100 %' : '');
+      document.getElementById('exp-principal').textContent = fmtMAD(round100(principal));
+      document.getElementById('exp-principal-sub').textContent = 'IS : ' + fmtNum(round100(totIS)) + ' | TVA : ' + fmtNum(round100(totTVA)) + ' | RAS : ' + fmtNum(round100(totRASRec + totRASUn));
+      document.getElementById('exp-cm-ref').textContent = 'Repère Cotisation Minimale (Art. 144, 0,25 %) : ' + fmtMAD(cmRepere) + '/an';
+      document.getElementById('exp-penalties').textContent = fmtRange(penLo, penHi);
+      document.getElementById('exp-penalties-sub').textContent = 'Art. 186 : ' + fmtRange(art186Lo, art186Hi) + ' | Art. 208 : ' + fmtMAD(round100(art208));
+      document.getElementById('exp-fixed').textContent = fmtMAD(fixedFines);
+      document.getElementById('exp-global').textContent = fmtRange(globLo, globHi);
+      var pctLo = st.ca > 0 ? ((globLo / st.ca) * 100).toFixed(1).replace('.', ',') : '0,0';
+      var pctHi = st.ca > 0 ? ((globHi / st.ca) * 100).toFixed(1).replace('.', ',') : '0,0';
+      document.getElementById('exp-ca-pct').textContent = (pctLo === pctHi ? pctLo : pctLo + ' – ' + pctHi) + ' % du CA';
+
+      renderAdvisory(signals);
+      renderPrint(st, m.total, vTxt, fmtRange(globLo, globHi));
+      saveLS(FISCAL_CONFIG_2026.storage.sim, st);
+    }
+
+    function renderAdvisory(signals) {
+      var box = document.getElementById('advisory-list');
+      if (!signals.length) {
+        box.innerHTML = '<div class="card" style="text-align:center;border-color:var(--green-bd);background:var(--green-bg);"><p style="margin:0;color:var(--green-l);font-weight:600;">Aucun signal d\'alerte actif — conserver les pièces justificatives 10 ans (Art. 211 CGI).</p></div>';
+        return;
+      }
+      signals.sort(function(a, b) { return a.ord - b.ord; });
+      box.innerHTML = signals.map(function(s) {
+        var bCls = s.sev === 'critique' ? 'b-red' : (s.sev === 'eleve' ? 'b-amber' : 'b-blue');
+        return '<article class="adv-card sev-' + s.sev + '">' +
+          '<div class="row-between"><div class="row-wrap"><span class="badge ' + bCls + '">' + escapeHTML(s.sevLbl) + '</span>' +
+          '<h4 style="margin:0;font-size:14px;color:var(--text);">' + escapeHTML(s.title) + '</h4></div>' +
+          '<span class="badge b-neutral mono">' + escapeHTML(s.ref) + '</span></div>' +
+          '<div class="adv-cols">' +
+            '<div class="adv-col"><h4 style="color:var(--gold-l);">Base légale</h4><p style="margin:0;">' + escapeHTML(s.ref) + '</p></div>' +
+            '<div class="adv-col"><h4 style="color:var(--amber-l);">Impact &amp; sanctions</h4><p style="margin:0;">' + escapeHTML(s.risk) + '</p></div>' +
+            '<div class="adv-col"><h4 style="color:var(--green-l);">Remédiation documentée</h4><p style="margin:0;">' + escapeHTML(s.action) + '</p></div>' +
+          '</div></article>';
+      }).join('');
+    }
+
+    function renderPrint(st, score, verdict, rangeTxt) {
+      var cLbl = st.caisse === 'crediteur' ? 'Solde créditeur' : (st.caisse === 'eleve' ? 'Solde élevé (' + fmtMAD(st.caisseAmt) + ')' : 'Normale');
+      document.getElementById('print-body').innerHTML =
+        '<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;">' +
+          '<div><strong>CA annuel HT :</strong> ' + escapeHTML(fmtMAD(st.ca)) + ' (Banque/Ass./EEP : ' + (st.special ? 'Oui' : 'Non') + ')</div>' +
+          '<div><strong>Indice &amp; Verdict :</strong> ' + score + '/100 — ' + escapeHTML(verdict) + '</div>' +
+          '<div><strong>Exposition globale :</strong> ' + escapeHTML(rangeTxt) + '</div>' +
+          '<div><strong>Écart CA / TVA :</strong> ' + st.tvaGap.toFixed(1).replace('.', ',') + ' %</div>' +
+          '<div><strong>Déficits :</strong> ' + st.deficits + ' ex. (Défaut Art. 20-IV : ' + (st.noEtat ? 'Oui' : 'Non') + ')</div>' +
+          '<div><strong>Caisse 5161 :</strong> ' + escapeHTML(cLbl) + '</div>' +
+          '<div><strong>Marge brute :</strong> -' + st.marge + ' pts • <strong>Espèces TTC :</strong> ' + escapeHTML(fmtMAD(st.cash)) + '</div>' +
+          '<div><strong>CCA 3463 :</strong> ' + (st.ccaOn ? escapeHTML(fmtMAD(st.ccaAmt)) : 'Non') + ' • <strong>Loi 69-21 :</strong> ' + (st.l69 ? 'Défaut' : 'Conforme') + '</div>' +
+          '<div style="grid-column:1/-1;"><strong>Hypothèses :</strong> IS ' + Math.round(st.hyp.isRate * 100) + ' %, TVA ' + Math.round(st.hyp.tvaRate * 100) + ' %, Art. 186-A ' + Math.round(st.hyp.art186 * 100) + ' %, ' + st.hyp.years + ' ex., retard ' + st.hyp.months + ' mois, suspension commission (' + (st.hyp.commSusp ? 'Oui' : 'Non') + '), mauvaise foi 100 % (' + (st.hyp.badFaith ? 'Oui' : 'Non') + ').</div>' +
+        '</div>';
+    }
+
+    function initSimulator() {
+      ['conforme', 'vigilance', 'critique'].forEach(function(k) {
+        var el = document.getElementById('badge-preset-' + k);
+        if (el) el.textContent = computeScore(PRESETS[k]).total + '/100';
+      });
+      var saved = loadLS(FISCAL_CONFIG_2026.storage.sim);
+      writeSim(saved && typeof saved.ca === 'number' ? saved : PRESETS.vigilance);
+
+      var caEl = document.getElementById('sim-ca');
+      caEl.addEventListener('input', updateSimulator);
+      caEl.addEventListener('blur', function() { caEl.value = fmtNum(parseNum(caEl.value)); updateSimulator(); });
+
+      var qBtns = document.querySelectorAll('.sim-ca-btn');
+      for (var i = 0; i < qBtns.length; i++) {
+        qBtns[i].addEventListener('click', function(ev) {
+          caEl.value = fmtNum(parseInt(ev.currentTarget.getAttribute('data-ca'), 10));
+          updateSimulator();
+        });
+      }
+      ['sim-tva-gap', 'sim-deficits', 'sim-caisse-amt', 'sim-marge', 'sim-cash', 'sim-cca-amt', 'hyp-months', 'hyp-reconst'].forEach(function(id) {
+        document.getElementById(id).addEventListener('input', updateSimulator);
+      });
+      ['sim-special', 'sim-no-etat', 'sim-cca-on', 'sim-6921', 'sim-loyers-pp', 'sim-ras', 'hyp-is', 'hyp-tva', 'hyp-186', 'hyp-years', 'hyp-comm-susp', 'hyp-fast-pay', 'hyp-bad-faith'].forEach(function(id) {
+        document.getElementById(id).addEventListener('change', updateSimulator);
+      });
+      var radios = document.querySelectorAll('input[name="caisse-state"]');
+      for (var j = 0; j < radios.length; j++) radios[j].addEventListener('change', updateSimulator);
+
+      document.getElementById('preset-conforme').addEventListener('click', function() {
+        writeSim(Object.assign({}, PRESETS.conforme, { hyp: readSim().hyp })); updateSimulator(); toast('Scénario « PME conforme » appliqué.', 'info');
+      });
+      document.getElementById('preset-vigilance').addEventListener('click', function() {
+        writeSim(Object.assign({}, PRESETS.vigilance, { hyp: readSim().hyp })); updateSimulator(); toast('Scénario « Zone de vigilance » appliqué.', 'info');
+      });
+      document.getElementById('preset-critique').addEventListener('click', function() {
+        writeSim(Object.assign({}, PRESETS.critique, { hyp: readSim().hyp })); updateSimulator(); toast('Scénario « Exposition élevée » appliqué.', 'info');
+      });
+      document.getElementById('btn-sim-reset').addEventListener('click', function() {
+        writeSim(Object.assign({}, PRESETS.conforme, { tvaGap: 0, marge: 0, hyp: { isRate: 0.20, tvaRate: 0.20, art186: 0.30, years: 1, months: 12, reconst: 0.05, commSusp: false, fastPay: false, badFaith: false } }));
+        updateSimulator(); toast('Simulateur réinitialisé.', 'info');
+      });
+      document.getElementById('btn-sim-pdf').addEventListener('click', function() {
+        document.getElementById('print-date').textContent = 'Édité le ' + new Date().toLocaleDateString('fr-FR');
+        window.print();
+      });
+      updateSimulator();
+    }
+
+    /* =========================================================================
+       6. MODULE 2 : AUDITEUR LOI N° 69-21 (DATE.UTC, LIVRAISON ART. 78-2, CSV RFC)
+    ========================================================================= */
+    const L69_SAMPLE = [
+      { id: 1, ref: 'FAC-2026-001', fournisseur: 'Atlas, Logistique SARL', emit: '2026-01-04', deliv: '', pay: '2026-04-10', ttc: 240000, delai: 60, sect: false, litige: false },
+      { id: 2, ref: 'FAC-2024-088', fournisseur: 'Papeterie Centrale',     emit: '2024-03-15', deliv: '', pay: '2024-08-20', ttc: 8000,   delai: 60, sect: false, litige: false },
+      { id: 3, ref: 'FAC-2026-042', fournisseur: 'Casa Tech Services',     emit: '2026-02-10', deliv: '', pay: '2026-07-05', ttc: 310000, delai: 60, sect: false, litige: true  },
+      { id: 4, ref: 'FAC-2026-077', fournisseur: 'Souss Agro SA',          emit: '2026-01-12', deliv: '', pay: '2026-08-25', ttc: 185000, delai: 180, sect: true, litige: false }
+    ];
+    var l69List = [];
+
+    function getTodayISO() {
+      var now = new Date();
+      return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    }
+    function firstOfNextMonthUTC(ms) {
+      var d = new Date(ms);
+      return Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 1);
+    }
+
+    function evalL69(inv, ca, manualBam, cutoffISO) {
+      var br = getL69Bracket(ca);
+      var emitUTC = parseUTC(inv.emit);
+      var delivUTC = inv.deliv ? parseUTC(inv.deliv) : null;
+      var unpaid = !inv.pay;
+      var effCutoff = parseUTC(cutoffISO || getTodayISO()) || parseUTC(FISCAL_CONFIG_2026.refDateISO);
+      var payUTC = unpaid ? effCutoff : parseUTC(inv.pay);
+      var ttc = Number(inv.ttc);
+      if (emitUTC === null || payUTC === null || !Number.isFinite(ttc) || ttc <= 0) {
+        return { valid: false, status: 'Ligne invalide', b: 'b-red', fine: 0, days: 0, months: 0, bam: 0, rate: 0, startUTC: null, startNote: '', dueUTC: null, effDelai: 0, pKey: 'ERR', pLbl: 'Invalide', reg: '—', dep: '—' };
+      }
+
+      // Art. 78-2 : point de départ selon la nature de l'opération
+      var opType = inv.opType || 'standard';
+      var startUTC = emitUTC, startNote = '', publicWarn = false;
+      if (opType === 'public') {
+        if (delivUTC !== null) {
+          startUTC = delivUTC;
+          startNote = ' (constat service)';
+        } else {
+          startNote = ' (constat manquant — repli émission)';
+          publicWarn = true;
+        }
+      } else if (opType === 'periodique') {
+        startUTC = firstOfNextMonthUTC(delivUTC !== null ? delivUTC : emitUTC);
+        startNote = ' (périodique 1er M+1)';
+      } else if (delivUTC !== null) {
+        var eom = endOfMonthUTC(delivUTC);
+        if (emitUTC > eom) { startUTC = eom; startNote = ' (fin mois livr.)'; }
+      }
+
+      // Art. 78-2 : plafonnement légal effectif à 120 j (ou 180 j sectoriel)
+      var maxCap = inv.sect ? FISCAL_CONFIG_2026.loi6921.maxSectDelay : FISCAL_CONFIG_2026.loi6921.maxStdDelay;
+      var rawDelai = Math.max(1, parseInt(inv.delai, 10) || FISCAL_CONFIG_2026.loi6921.defaultDelay);
+      var capWarn = rawDelai > maxCap;
+      var effDelai = Math.min(rawDelai, maxCap);
+      var dueUTC = addDays(startUTC, effDelai);
+
+      var dObj = new Date(dueUTC), y = dObj.getUTCFullYear(), q = Math.floor(dObj.getUTCMonth() / 3) + 1;
+      var isTrans = (ca <= 50000000) && (y === 2024 || y === 2025);
+      var pKey = isTrans ? (y + '-A') : (y + '-T' + q);
+      var pLbl = isTrans ? ('Année ' + y + ' (Transitoire)') : (y + ' — T' + q);
+      var reg = isTrans ? 'Annuel transitoire (Art. 2)' : 'Trimestriel (Art. 78-4)';
+      var dep = isTrans ? ('Avant 01/04/' + (y + 1)) : (q === 1 ? '30/04/' + y : q === 2 ? '31/07/' + y : q === 3 ? '31/10/' + y : '31/01/' + (y + 1));
+
+      if (!br.startISO) return { valid: true, status: 'Hors champ (CA ≤ 2 M)', b: 'b-neutral', fine: 0, days: 0, months: 0, bam: 0, rate: 0, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+      var startScope = parseUTC(br.startISO);
+      if (emitUTC < startScope) return { valid: true, status: 'Antérieure au ' + fmtFR(startScope), b: 'b-neutral', fine: 0, days: 0, months: 0, bam: 0, rate: 0, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+      if (emitUTC < parseUTC(FISCAL_CONFIG_2026.loi6921.exemptCutoffISO) && ttc <= FISCAL_CONFIG_2026.loi6921.exemptMaxTTC) {
+        return { valid: true, status: 'Exonérée ≤ 10 k (< 2025)', b: 'b-green', fine: 0, days: 0, months: 0, bam: 0, rate: 0, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+      }
+
+      var days = Math.max(0, diffDays(dueUTC, payUTC));
+      if (days <= 0) return { valid: true, status: unpaid ? 'Non échue' : 'Dans le délai', b: 'b-green', fine: 0, days: 0, months: 0, bam: 0, rate: 0, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+      var months = Math.ceil(days / 30);
+      if (inv.litige) return { valid: true, status: 'Suspendue Art. 78-3 (+' + days + ' j)', b: 'b-blue', fine: 0, days: days, months: months, bam: 0, rate: 0, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+
+      var bam = manualBam !== null ? manualBam : getBAMRate(addDays(dueUTC, 30));
+      var rate = bam + (months - 1) * FISCAL_CONFIG_2026.loi6921.extraMonthRate;
+      var fine = ttc * (rate / 100);
+      return { valid: true, status: '+' + days + ' j (' + months + ' mois)', b: 'b-red', fine: fine, days: days, months: months, bam: bam, rate: rate, startUTC: startUTC, startNote: startNote, publicWarn: publicWarn, dueUTC: dueUTC, effDelai: effDelai, capWarn: capWarn, maxCap: maxCap, unpaid: unpaid, payUTC: payUTC, pKey: pKey, pLbl: pLbl, reg: reg, dep: dep };
+    }
+
+    function renderL69() {
+      var ca = parseNum(document.getElementById('l69-ca').value);
+      var br = getL69Bracket(ca);
+      var mode = document.getElementById('l69-bam-mode').value;
+      document.getElementById('wrap-l69-bam').style.display = mode === 'manual' ? 'block' : 'none';
+      var manualBam = mode === 'manual' ? (parseFloat(document.getElementById('l69-bam-val').value) || 0) : null;
+      var cutoffISO = document.getElementById('l69-cutoff').value || getTodayISO();
+      var mult = document.getElementById('l69-recidive').checked ? 2 : 1;
+
+      var totFine = 0, overdueTTC = 0, overdueN = 0, pMap = {};
+      var rows = l69List.map(function(inv) {
+        var r = evalL69(inv, ca, manualBam, cutoffISO);
+        if (r.valid) {
+          if (r.days > 0) {
+            overdueN++; overdueTTC += inv.ttc;
+            if (!inv.litige) totFine += r.fine;
+          }
+          if (!pMap[r.pKey]) pMap[r.pKey] = { lbl: r.pLbl, reg: r.reg, dep: r.dep, n: 0, ov: 0, ttc: 0, fine: 0 };
+          pMap[r.pKey].n++;
+          if (r.days > 0) { pMap[r.pKey].ov++; pMap[r.pKey].ttc += inv.ttc; pMap[r.pKey].fine += r.fine; }
+        }
+        var startTxt = r.startUTC ? fmtFR(r.startUTC) + (r.publicWarn ? '' : r.startNote) : 'Invalide';
+        var startWarn = r.publicWarn ? '<div style="font-size:12px;color:var(--amber-l);">Constat manquant (repli émission)</div>' : '';
+        var payTxt = r.payUTC ? (r.unpaid ? 'Impayée (' + fmtFR(r.payUTC) + ')' : fmtFR(r.payUTC)) : 'Invalide';
+        var dWarn = r.capWarn ? '<div style="font-size:12px;color:var(--amber-l);">Plafonné à ' + r.maxCap + ' j</div>' : (inv.sect ? '<div style="font-size:12px;color:var(--blue-l);">Sectoriel</div>' : '');
+
+        return '<tr>' +
+          '<td class="mono">' + escapeHTML(inv.ref) + '</td>' +
+          '<td style="font-weight:500;">' + escapeHTML(inv.fournisseur) + '</td>' +
+          '<td class="mono">' + escapeHTML(startTxt) + startWarn + '</td>' +
+          '<td class="mono">' + escapeHTML(r.effDelai || inv.delai) + ' j' + dWarn + '</td>' +
+          '<td class="mono">' + (r.dueUTC ? fmtFR(r.dueUTC) : '—') + '</td>' +
+          '<td class="mono">' + escapeHTML(payTxt) + '</td>' +
+          '<td class="mono tr">' + escapeHTML(fmtMAD(inv.ttc)) + '</td>' +
+          '<td><span class="badge ' + r.b + '">' + escapeHTML(r.status) + '</span></td>' +
+          '<td class="mono tc">' + (r.bam > 0 ? r.bam.toFixed(2).replace('.', ',') + ' %' : '—') + '</td>' +
+          '<td class="mono tr">' + (r.rate > 0 ? r.rate.toFixed(2).replace('.', ',') + ' %' : '—') + '</td>' +
+          '<td class="mono tr" style="font-weight:700;color:' + (r.fine > 0 ? 'var(--gold-l)' : 'var(--text-3)') + ';">' + escapeHTML(fmtMAD(r.fine)) + '</td>' +
+          '<td class="tc no-print"><button type="button" class="btn btn-sm l69-del" data-id="' + inv.id + '">Suppr.</button></td>' +
+        '</tr>';
+      }).join('');
+
+      document.getElementById('l69-tbody').innerHTML = rows || '<tr><td colspan="12" class="tc" style="padding:20px;color:var(--text-3);">Aucune facture dans le périmètre.</td></tr>';
+      document.getElementById('l69-count-lbl').textContent = l69List.length + (l69List.length > 1 ? ' lignes' : ' ligne');
+      document.getElementById('l69-k-total').textContent = l69List.length + (l69List.length > 1 ? ' factures' : ' facture');
+      document.getElementById('l69-k-scope').textContent = br.label + (br.startISO ? ' • dès ' + fmtFR(parseUTC(br.startISO)) : '');
+      document.getElementById('l69-k-ttc').textContent = fmtMAD(overdueTTC);
+      document.getElementById('l69-k-overdue').textContent = overdueN + ' facture' + (overdueN > 1 ? 's' : '') + ' hors délai';
+      document.getElementById('l69-k-fine').textContent = fmtMAD(totFine);
+      document.getElementById('l69-k-visa').textContent = 'Visa : ' + getL69Visa(ca);
+      document.getElementById('l69-k-def').textContent = br.fine > 0 ? fmtMAD(br.fine * mult) : 'Hors champ';
+      document.getElementById('l69-k-trans').textContent = br.transFine > 0
+        ? 'Transition 2024–25 : ' + fmtMAD(br.transFine) + ' | Omission : 5 000 MAD/fact.' + (mult === 2 ? ' (Art. 78-6 ×2 contrôle)' : '')
+        : 'Omission/discordance : 5 000 MAD/facture' + (mult === 2 ? ' (Art. 78-6 ×2 en contrôle sur place)' : '');
+
+      var pKeys = Object.keys(pMap).sort().reverse();
+      document.getElementById('l69-periods-tbody').innerHTML = pKeys.map(function(k) {
+        var p = pMap[k];
+        return '<tr><td style="font-weight:600;">' + escapeHTML(p.lbl) + '</td><td>' + escapeHTML(p.reg) + '</td>' +
+          '<td class="mono">' + escapeHTML(p.dep) + '</td><td class="mono tc">' + p.n + '</td><td class="mono tc">' + p.ov + '</td>' +
+          '<td class="mono tr">' + escapeHTML(fmtMAD(p.ttc)) + '</td>' +
+          '<td class="mono tr" style="font-weight:700;color:var(--gold-l);">' + escapeHTML(fmtMAD(p.fine)) + '</td></tr>';
+      }).join('') || '<tr><td colspan="7" class="tc" style="padding:16px;color:var(--text-3);">Aucune période calculée.</td></tr>';
+
+      saveLS(FISCAL_CONFIG_2026.storage.l69, { ca: ca, cutoff: cutoffISO, list: l69List });
+    }
+
+    function parseCSVLine(line, sep) {
+      var res = [], cur = '', inQ = false;
+      for (var i = 0; i < line.length; i++) {
+        var c = line[i];
+        if (inQ) {
+          if (c === '"' && line[i + 1] === '"') { cur += '"'; i++; }
+          else if (c === '"') inQ = false;
+          else cur += c;
+        } else {
+          if (c === '"') inQ = true;
+          else if (c === sep) { res.push(cur.trim()); cur = ''; }
+          else cur += c;
+        }
+      }
+      res.push(cur.trim());
+      return res;
+    }
+
+    function onCSVImport(ev) {
+      var input = ev.target, file = input.files && input.files[0];
+      var err = document.getElementById('l69-err');
+      err.classList.remove('visible'); err.textContent = '';
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        try {
+          var raw = String(e.target.result || '').replace(/^\uFEFF/, '');
+          var lines = raw.split(/\r?\n/).filter(function(l) { return l.trim().length > 0; });
+          if (lines.length < 2) { err.textContent = 'Fichier CSV vide ou sans lignes de données.'; err.classList.add('visible'); return; }
+          var sep = lines[0].split(';').length >= lines[0].split(',').length ? ';' : ',';
+          var seen = {}; l69List.forEach(function(x) { seen[normTxt(x.ref)] = true; });
+          var added = [], dups = 0, bad = [], cappedCount = 0;
+          for (var i = 1; i < lines.length; i++) {
+            var cols = parseCSVLine(lines[i], sep);
+            if (cols.length < 6) { bad.push('L' + (i + 1) + ' (colonnes)'); continue; }
+            var ref = cols[0], fourn = cols[1];
+            var emitMs = parseUTC(cols[2]);
+            var delai = parseInt(cols[3], 10);
+            var payRaw = cols[4];
+            var payMs = payRaw ? parseUTC(payRaw) : 0;
+            var ttc = parseFloat(String(cols[5]).replace(/\s+/g, '').replace(',', '.'));
+            var sect = ['oui', 'true', '1'].indexOf(normTxt(cols[6])) !== -1;
+            var litige = ['oui', 'true', '1'].indexOf(normTxt(cols[7])) !== -1;
+            var delivMs = cols[8] ? parseUTC(cols[8]) : null;
+            var opRaw = normTxt(cols[9]);
+            var opType = opRaw.indexOf('period') !== -1 ? 'periodique' : (opRaw.indexOf('public') !== -1 ? 'public' : 'standard');
+            if (!ref || !fourn || emitMs === null || (payRaw && payMs === null) || !Number.isFinite(ttc) || ttc <= 0) {
+              bad.push('L' + (i + 1) + ' (date/montant)'); continue;
+            }
+            var k = normTxt(ref);
+            if (seen[k]) { dups++; continue; }
+            seen[k] = true;
+            var maxCap = sect ? FISCAL_CONFIG_2026.loi6921.maxSectDelay : FISCAL_CONFIG_2026.loi6921.maxStdDelay;
+            var rawD = Number.isFinite(delai) && delai > 0 ? delai : 60;
+            if (rawD > maxCap) cappedCount++;
+            added.push({
+              id: Date.now() + i, ref: ref, fournisseur: fourn,
+              emit: fmtISO(emitMs), deliv: delivMs ? fmtISO(delivMs) : '',
+              pay: payRaw ? fmtISO(payMs) : '', ttc: ttc,
+              delai: rawD, sect: sect, litige: litige, opType: opType
+            });
+          }
+          if (added.length) { l69List = added.concat(l69List); renderL69(); }
+          if (bad.length || dups || cappedCount) {
+            err.textContent = 'Import CSV : ' + added.length + ' ajoutée(s), ' + dups + ' doublon(s) ignoré(s), ' + bad.length + ' ligne(s) rejetée(s)' + (cappedCount ? ', ' + cappedCount + ' délai(s) plafonné(s) au maximum légal (120/180 j)' : '') + (bad.length ? ' (' + bad.slice(0, 5).join(', ') + ')' : '') + '.';
+            err.classList.add('visible');
+          }
+          toast('CSV : ' + added.length + ' importée(s), ' + dups + ' doublon(s), ' + bad.length + ' rejetée(s).', added.length ? 'success' : 'error');
+        } catch (ex) {
+          err.textContent = 'Erreur de lecture du fichier CSV.'; err.classList.add('visible');
+        } finally {
+          input.value = '';
+        }
+      };
+      reader.onerror = function() { input.value = ''; err.textContent = 'Lecture impossible.'; err.classList.add('visible'); };
+      reader.readAsText(file, 'UTF-8');
+    }
+
+    function initLoi6921() {
+      var saved = loadLS(FISCAL_CONFIG_2026.storage.l69);
+      var cutoffEl = document.getElementById('l69-cutoff');
+      if (saved && Array.isArray(saved.list)) {
+        document.getElementById('l69-ca').value = fmtNum(saved.ca != null ? saved.ca : 15000000);
+        cutoffEl.value = saved.cutoff || getTodayISO();
+        l69List = saved.list;
+      } else {
+        cutoffEl.value = getTodayISO();
+        l69List = L69_SAMPLE.map(function(x) { return Object.assign({}, x); });
+      }
+      cutoffEl.addEventListener('change', renderL69);
+      var caEl = document.getElementById('l69-ca');
+      caEl.addEventListener('input', renderL69);
+      caEl.addEventListener('blur', function() { caEl.value = fmtNum(parseNum(caEl.value)); renderL69(); });
+      var qBtns = document.querySelectorAll('.l69-ca-btn');
+      for (var i = 0; i < qBtns.length; i++) {
+        qBtns[i].addEventListener('click', function(ev) {
+          caEl.value = fmtNum(parseInt(ev.currentTarget.getAttribute('data-ca'), 10)); renderL69();
+        });
+      }
+      document.getElementById('btn-l69-sync').addEventListener('click', function() {
+        caEl.value = fmtNum(parseNum(document.getElementById('sim-ca').value)); renderL69(); toast('CA HT synchronisé.', 'info');
+      });
+      document.getElementById('l69-bam-mode').addEventListener('change', renderL69);
+      document.getElementById('l69-bam-val').addEventListener('input', renderL69);
+      document.getElementById('l69-recidive').addEventListener('change', renderL69);
+      document.getElementById('l69-file').addEventListener('change', onCSVImport);
+      document.getElementById('f-sect').addEventListener('change', function(ev) {
+        document.getElementById('f-delai').max = ev.currentTarget.checked ? '180' : '120';
+      });
+      document.getElementById('l69-form').addEventListener('submit', function(ev) {
+        ev.preventDefault();
+        var ref = document.getElementById('f-ref').value.trim();
+        var fourn = document.getElementById('f-fourn').value.trim();
+        var emit = document.getElementById('f-emit').value;
+        var deliv = document.getElementById('f-deliv').value;
+        var pay = document.getElementById('f-pay').value;
+        var ttc = parseFloat(document.getElementById('f-ttc').value);
+        var sect = document.getElementById('f-sect').checked;
+        var maxCap = sect ? FISCAL_CONFIG_2026.loi6921.maxSectDelay : FISCAL_CONFIG_2026.loi6921.maxStdDelay;
+        var delai = parseInt(document.getElementById('f-delai').value, 10);
+        var opType = document.getElementById('f-optype').value;
+        if (!ref || !fourn || parseUTC(emit) === null || (deliv && parseUTC(deliv) === null) || (pay && parseUTC(pay) === null) || !Number.isFinite(ttc) || ttc <= 0) {
+          toast('Dates ou montant TTC invalides.', 'error'); return;
+        }
+        if (opType === 'public' && !deliv) {
+          toast('Établissement public (Art. 78-2) : saisissez la date de constatation du service fait.', 'error'); return;
+        }
+        if (!Number.isFinite(delai) || delai < 1 || delai > maxCap) {
+          toast('Délai convenu invalide : doit être compris entre 1 et ' + maxCap + ' jours.', 'error'); return;
+        }
+        if (l69List.some(function(x) { return normTxt(x.ref) === normTxt(ref); })) {
+          toast('Référence en doublon : ' + ref, 'error'); return;
+        }
+        l69List.unshift({ id: Date.now(), ref: ref, fournisseur: fourn, emit: emit, deliv: deliv, pay: pay, ttc: ttc, delai: delai, sect: sect, litige: document.getElementById('f-litige').checked, opType: document.getElementById('f-optype').value });
+        document.getElementById('l69-form').reset();
+        document.getElementById('f-delai').value = '60';
+        document.getElementById('f-delai').max = '120';
+        renderL69(); toast('Facture ' + ref + ' ajoutée.', 'success');
+      });
+      document.getElementById('l69-tbody').addEventListener('click', function(ev) {
+        var b = ev.target.closest('.l69-del');
+        if (!b) return;
+        var id = Number(b.getAttribute('data-id'));
+        l69List = l69List.filter(function(x) { return x.id !== id; });
+        renderL69(); toast('Facture supprimée.', 'info');
+      });
+      document.getElementById('btn-l69-sample').addEventListener('click', function() {
+        l69List = L69_SAMPLE.map(function(x) { return Object.assign({}, x); }); renderL69(); toast('Jeu de test rechargé.', 'info');
+      });
+      document.getElementById('btn-l69-clear').addEventListener('click', function() {
+        l69List = []; renderL69(); toast('Liste vidée.', 'info');
+      });
+      document.getElementById('btn-l69-tpl').addEventListener('click', function() {
+        var csv = [
+          'Reference;Fournisseur;DateEmission;DelaiJours;DatePaiement;MontantTTC;Sectoriel;Litige;DateLivraison;TypeOperation',
+          'FAC-2026-101;"Atlas, Logistique SARL";04/01/2026;60;10/04/2026;240000,00;Non;Non;;Standard',
+          'FAC-2024-055;"Papeterie Centrale";15/03/2024;60;20/08/2024;8000,00;Non;Non;;Standard',
+          'FAC-2026-205;"Souss Industrie SA";10/01/2026;180;25/08/2026;420000,00;Oui;Non;05/01/2026;Standard',
+          'FAC-2026-309;"Prestataire Litige";01/02/2026;60;30/06/2026;150000,00;Non;Oui;;Periodique'
+        ].join('\n');
+        downloadFile('\uFEFF' + csv, 'modele_loi_69_21.csv', 'text/csv;charset=utf-8;');
+        toast('Modèle CSV téléchargé.', 'success');
+      });
+      document.getElementById('btn-l69-export').addEventListener('click', function() {
+        var ca = parseNum(document.getElementById('l69-ca').value);
+        var mode = document.getElementById('l69-bam-mode').value;
+        var manualBam = mode === 'manual' ? (parseFloat(document.getElementById('l69-bam-val').value) || 0) : null;
+        var cutoffISO = document.getElementById('l69-cutoff').value || getTodayISO();
+        var out = ['Reference;Fournisseur;DepartDelai;DelaiRetenuJours;Echeance;Paiement;MontantTTC;Periode;Statut;JoursRetard;MoisRetard;TauxBAM;TauxTotal;AmendeMAD'];
+        l69List.forEach(function(inv) {
+          var r = evalL69(inv, ca, manualBam, cutoffISO);
+          out.push([
+            inv.ref, '"' + String(inv.fournisseur).replace(/"/g, '""') + '"',
+            r.startUTC ? fmtFR(r.startUTC) : '', r.effDelai || inv.delai, r.dueUTC ? fmtFR(r.dueUTC) : '',
+            r.payUTC ? fmtFR(r.payUTC) : '', inv.ttc.toFixed(2).replace('.', ','),
+            r.pLbl, '"' + r.status + '"', r.days, r.months,
+            r.bam.toFixed(2).replace('.', ','), r.rate.toFixed(2).replace('.', ','), r.fine.toFixed(2).replace('.', ',')
+          ].join(';'));
+        });
+        downloadFile('\uFEFF' + out.join('\n'), 'audit_loi_69_21_resultats.csv', 'text/csv;charset=utf-8;');
+        toast('Résultats exportés en CSV.', 'success');
+      });
+      renderL69();
+    }
+
+    /* =========================================================================
+       7. MODULE 3 : VEILLE LF 2026 (10 FICHES SOURCÉES, RECHERCHE SANS ACCENTS)
+    ========================================================================= */
+    const VEILLE_DATA = [
+      { cat: 'IS', date: 'Prochaine marche : 01/01/2027', ref: 'Art. 15 bis, 19-IV-A, 157-I & 247-XXXXVI',
+        title: 'RAS IS 5 % — Honoraires, commissions et rémunérations aux personnes morales',
+        text: 'Retenue à la source de 5 % opérée sur les honoraires, commissions, courtages et rémunérations similaires versés aux personnes morales par l\'État, les collectivités territoriales, les EEP et filiales, les établissements de crédit, les entreprises d\'assurances et de réassurance, ainsi que les sociétés dont le CA HT ≥ 200 M MAD.',
+        note: 'Calendrier Art. 247-XXXXVI : ≥ 500 M MAD en vigueur depuis le 01/07/2026 ; prochaine échéance ≥ 350 M MAD le 01/01/2027 ; ≥ 200 M MAD le 01/01/2028.' },
+      { cat: 'IS', date: 'Effet : 01/07/2026 (LF Art. 7-IV-1)', ref: 'Art. 4-V, 15 ter, 19-IV-A, 73-II-A & 157-I',
+        title: 'RAS de 5 % (IS / IR) sur les produits de location immobilière',
+        text: 'Retenue à la source de 5 % sur les loyers d\'immeubles bâtis, non bâtis et constructions. En lecture littérale de l\'Art. 157-I : le calendrier 500 M / 350 M / 200 M (Art. 247-XXXXVI) ne vise que les loyers versés aux sociétés IS (1er tiret), tandis que les loyers versés aux personnes physiques RNR/RNS (2e tiret) visent tout payeur PM ou PP RNR/RNS sans seuil de CA. Nuance doctrinale : certaines notes de cabinets étendent le calendrier CA à tous les payeurs (à confirmer par circulaire DGI).',
+        note: 'Retenue imputable avec droit à restitution ; état récapitulatif des loyers soumis à RAS à joindre à la déclaration Art. 151-V.' },
+      { cat: 'TVA', date: 'Prochaine marche : 01/01/2027', ref: 'Art. 117-V-c, Art. 89-I (5°, 10°, 12°) & 247-XXXXVI',
+        title: 'RAS TVA 75 % / 100 % sur prestations de services (mécanisme distinct)',
+        text: 'Mécanisme distinct de la RAS IS 5 % : les banques, assurances et entreprises visées par le calendrier CA (500 M dès 01/07/2026, 350 M au 01/01/2027, 200 M au 01/01/2028) retiennent 75 % de la TVA sur les prestations listées par décret (Art. 89-I 5°, 10°, 12°).',
+        note: 'À défaut d\'attestation de régularité fiscale datée de moins de 6 mois fournie par le prestataire, la retenue TVA passe à 100 %.' },
+      { cat: 'TVA', date: 'CGI 2026 (date non précisée à l\'Art. 7-IV)', ref: 'Art. 125 quinquies-II CGI 2026',
+        title: 'Auto-liquidation obligatoire TVA — Déchets neufs et métaux de récupération',
+        text: 'Les entreprises industrielles de transformation assujetties déclarent et acquittent obligatoirement la TVA sur leurs achats de déchets neufs d\'industrie, métaux et matières de récupération, tout en opérant la déduction simultanée selon le droit commun.',
+        note: 'Vérifier les modalités de déclaration mensuelle/trimestrielle et les justificatifs fournisseurs (B.O. n° 7465 bis).' },
+      { cat: 'Droits d\'enreg.', date: 'Effet : 01/07/2026 (LF Art. 7-IV-15)', ref: 'Art. 133-III & Art. 11-II CGI 2026',
+        title: 'Droit supplémentaire de 2 % sur mutations > 300 000 MAD sans traçabilité',
+        text: 'Droit d\'enregistrement additionnel de 2 % sur les mutations à titre onéreux d\'immeubles, droits réels immobiliers (> 300 000 MAD) ou fonds de commerce lorsque l\'acte omet les références de paiement ou que le règlement ne passe pas par un moyen traçable (Art. 11-II).',
+        note: 'En cas de règlement mixte (espèces + virement/chèque), le droit de 2 % porte uniquement sur la fraction réglée en espèces.' },
+      { cat: 'Droits d\'enreg.', date: 'Effet : 01/01/2026 (LF Art. 7-IV-14)', ref: 'Art. 133-I-I, Art. 135-II-14° & Art. 129-V-4°',
+        title: 'Marchés publics à 0,1 % et unification crédit/garanties à 200 MAD fixe',
+        text: 'Application d\'un droit proportionnel de 0,1 % sur les marchés publics (à la charge du titulaire). Harmonisation des opérations de crédit accordées par les établissements de crédit/organismes assimilés (Loi 103-12) et droit fixe unique de 200 MAD sur les garanties et mainlevées afférentes.',
+        note: 'Taux de cession des titres de sociétés à prépondérance immobilière non cotées abaissé de 6 % à 5 % (Art. 133-I-G-4°).' },
+      { cat: 'IR', date: 'Effet : 01/01/2026 (LF Art. 7-IV-10 & 11)', ref: 'Art. 74-I & Art. 84 bis CGI 2026',
+        title: 'Charges de famille à 600 MAD et déclaration des capitaux mobiliers étrangers',
+        text: 'Déduction annuelle d\'IR pour charges de famille portée à 600 MAD par personne à charge (plafond 3 600 MAD pour 6 personnes). Instauration de l\'Art. 84 bis imposant une déclaration annuelle avant le 1er avril des revenus et profits de capitaux mobiliers de source étrangère non soumis à RAS au Maroc.',
+        note: 'Joindre une attestation fiscale étrangère mentionnant la base imposable et l\'impôt acquitté en cas d\'imputation conventionnelle.' },
+      { cat: 'IS', date: '2026 — 2030 (Art. 247-XXXXIV)', ref: 'Art. 6-II-B-7°, Art. 10-I-B-2°, Art. 247-XXXXIII & XXXXIV',
+        title: 'Sociétés sportives (Loi 30-09) : dons déductibles, TVA et abattement IR',
+        text: 'Dons aux sociétés sportives déductibles dans la limite de 20 % du bénéfice net et plafonnés à 5 M MAD/exercice. Exonération de la TVA sans droit à déduction du 01/01/2026 au 31/12/2030 (Art. 247-XXXXIV) et abattement IR dégressif sur les salaires sportifs (90 % en 2026 à 60 % en 2029, Art. 247-XXXXIII).',
+        note: 'Exonération IS de 5 ans décomptée à partir de l\'exercice de la première vente imposable (Art. 6-II-B-7°).' },
+      { cat: 'IS', date: 'CGI 2026 (date non précisée à l\'Art. 7-IV)', ref: 'Art. 9-I-B-3°, Art. 13-I/VI, Art. 14-VI & Art. 66-II-C',
+        title: 'Distributions d\'OPCC : traitement fiscal selon la nature réelle du revenu',
+        text: 'Les sommes distribuées par les Organismes de Placement Collectif en Capital (OPCC) ne sont plus systématiquement traitées en dividendes : elles suivent le régime correspondant à leur origine réelle (dividendes, intérêts de placements à revenu fixe ou plus-values de cession).',
+        note: 'Alignement entre investisseurs personnes morales (IS) et personnes physiques (IR) assurant la neutralité fiscale.' },
+      { cat: 'Mesures communes', date: '2026 — 2028', ref: 'Art. 145-X, Art. 150-III, Art. 221-I & Art. 273 CGI 2026',
+        title: 'Reconduction CSS 2026–2028, sauvegarde judiciaire et adresse électronique libre',
+        text: 'Reconduction de la Contribution Sociale de Solidarité sur les bénéfices et revenus (≥ 1 M MAD) pour 2026, 2027 et 2028 (Art. 273). Intégration de la procédure de sauvegarde dans l\'obligation d\'information préalable (Art. 150-III) et dans la procédure accélérée de rectification (Art. 221-I). Libre choix de l\'adresse électronique déclarée à la DGI (Art. 145-X).',
+        note: 'Le défaut d\'information préalable avant ouverture d\'une sauvegarde ou d\'un redressement judiciaire rend la forclusion inopposable à la DGI.' }
+    ];
+
+    var activeVCat = 'Toutes';
+    function renderVeilleFilters() {
+      var cats = ['Toutes', 'IS', 'TVA', 'IR', 'Droits d\'enreg.', 'Mesures communes'];
+      document.getElementById('v-filters').innerHTML = cats.map(function(c) {
+        var n = c === 'Toutes' ? VEILLE_DATA.length : VEILLE_DATA.filter(function(x) { return x.cat === c; }).length;
+        return '<button type="button" class="chip v-cat-btn ' + (c === activeVCat ? 'active' : '') + '" data-cat="' + escapeHTML(c) + '">' + escapeHTML(c) + ' (' + n + ')</button>';
+      }).join('');
+    }
+    function renderVeille() {
+      var q = normTxt(document.getElementById('v-search').value);
+      var items = VEILLE_DATA.filter(function(x) {
+        if (activeVCat !== 'Toutes' && x.cat !== activeVCat) return false;
+        return !q || normTxt(x.title + ' ' + x.text + ' ' + x.ref + ' ' + x.note + ' ' + x.cat).indexOf(q) !== -1;
+      });
+      document.getElementById('v-grid').innerHTML = items.map(function(x) {
+        return '<article class="card stack-md" style="justify-content:space-between;">' +
+          '<div class="stack-sm"><div class="row-between"><span class="badge b-blue">' + escapeHTML(x.cat) + '</span>' +
+          '<span class="badge b-neutral mono">' + escapeHTML(x.date) + '</span></div>' +
+          '<h3 style="margin:0;font-size:15px;font-weight:600;">' + escapeHTML(x.title) + '</h3>' +
+          '<p style="margin:0;font-size:13px;color:var(--text-2);">' + escapeHTML(x.text) + '</p></div>' +
+          '<div style="border-top:1px solid var(--border);padding-top:10px;display:flex;flex-direction:column;gap:8px;">' +
+            '<div class="mono" style="font-size:12px;color:var(--gold-l);">' + escapeHTML(x.ref) + '</div>' +
+            '<div class="card-sub" style="padding:9px 11px;font-size:12px;color:var(--text-2);"><strong style="color:var(--text);">Point de vigilance :</strong> ' + escapeHTML(x.note) + '</div>' +
+          '</div></article>';
+      }).join('') || '<div class="card" style="grid-column:1/-1;text-align:center;color:var(--text-3);">Aucune mesure trouvée.</div>';
+    }
+    function initVeille() {
+      renderVeilleFilters(); renderVeille();
+      document.getElementById('v-search').addEventListener('input', renderVeille);
+      document.getElementById('v-filters').addEventListener('click', function(ev) {
+        var b = ev.target.closest('.v-cat-btn');
+        if (!b) return;
+        activeVCat = b.getAttribute('data-cat') || 'Toutes';
+        renderVeilleFilters(); renderVeille();
+      });
+    }
+
+    /* =========================================================================
+       8. MODULE 4 : BOÎTE À OUTILS (PYTHON CLI, EXCEL FR/EN, FRISE 8 ÉTAPES)
+    ========================================================================= */
+    const PY_CODE = [
+      '#!/usr/bin/env python3',
+      '"""TaxRadar DGI — Audit comptable et fiscal CLI (CGI Maroc 2026 & CGNC)"""',
+      'import argparse, json, sys',
+      'from pathlib import Path',
+      'import pandas as pd',
+      '',
+      'REQUIRED_COLS = {"Date", "Compte", "Tiers", "ModePaiement", "Debit", "Credit"}',
+      '',
+      'def load_ledger(path: Path, sep: str, decimal: str) -> pd.DataFrame:',
+      '    df = pd.read_csv(path, sep=sep, decimal=decimal, dtype={"Compte": str, "Tiers": str, "ModePaiement": str}, encoding="utf-8-sig")',
+      '    missing = REQUIRED_COLS - set(df.columns)',
+      '    if missing:',
+      '        raise ValueError(f"Colonnes manquantes dans le CSV : {sorted(missing)}")',
+      '    df["Date"] = pd.to_datetime(df["Date"], dayfirst=True, errors="coerce")',
+      '    if df["Date"].isna().any():',
+      '        raise ValueError(f"{int(df[\'Date\'].isna().sum())} ligne(s) avec date invalide.")',
+      '    df["Compte"] = df["Compte"].fillna("").str.strip()',
+      '    df["Tiers"] = df["Tiers"].fillna("INCONNU").str.strip()',
+      '    df["ModePaiement"] = df["ModePaiement"].fillna("").str.strip().str.lower()',
+      '    df["Debit"] = pd.to_numeric(df["Debit"], errors="coerce").fillna(0.0)',
+      '    df["Credit"] = pd.to_numeric(df["Credit"], errors="coerce").fillna(0.0)',
+      '    return df',
+      '',
+      'def audit(df: pd.DataFrame, solde_initial_caisse: float, tva_rate: float) -> dict:',
+      '    # 1. Caisse 5161 avec report à nouveau (Art. 213-I-4°)',
+      '    c = df[df["Compte"].str.startswith("5161")].copy()',
+      '    c["Flux"] = c["Debit"] - c["Credit"]',
+      '    cj = c.groupby("Date", as_index=False)["Flux"].sum().sort_values("Date")',
+      '    cj["Solde"] = solde_initial_caisse + cj["Flux"].cumsum()',
+      '    jours_cred = int((cj["Solde"] < -0.01).sum())',
+      '',
+      '    # 2. Plafonds espèces journalier (5 000 TTC) ET mensuel (50 000 TTC) par fournisseur (Art. 11-II & 106-II)',
+      '    is_cash = df["ModePaiement"].isin(["especes", "espèces", "cash", "espece", "espèce"])',
+      '    cf = df[df["Compte"].str.startswith("4411") & is_cash & (df["Debit"] > 0)].copy()',
+      '    day_g = cf.groupby(["Date", "Tiers"], as_index=False)["Debit"].sum()',
+      '    day_g["ExcJour"] = (day_g["Debit"] - 5000.0).clip(lower=0.0)',
+      '    day_g["AdmisJour"] = day_g["Debit"].clip(upper=5000.0)',
+      '    day_g["Mois"] = day_g["Date"].dt.to_period("M").astype(str)',
+      '    mon_g = day_g.groupby(["Mois", "Tiers"], as_index=False)["AdmisJour"].sum()',
+      '    mon_g["ExcMois"] = (mon_g["AdmisJour"] - 50000.0).clip(lower=0.0)',
+      '    exc_ttc = float(day_g["ExcJour"].sum() + mon_g["ExcMois"].sum())',
+      '',
+      '    # 3. Rapprochement algébrique signé CA (711/712) vs TVA 4455 (Crédit - Débit)',
+      '    v = df[df["Compte"].str.startswith(("711", "712"))]',
+      '    ca_ht = float(v["Credit"].sum() - v["Debit"].sum())',
+      '    t = df[df["Compte"].str.startswith("4455")]',
+      '    tva_nette = float(t["Credit"].sum() - t["Debit"].sum())',
+      '    tva_theo = ca_ht * tva_rate',
+      '    ecart_signe = tva_nette - tva_theo',
+      '',
+      '    return {',
+      '        "caisse_5161": {"solde_initial": solde_initial_caisse, "jours_crediteurs": jours_cred, "solde_min": round(float(cj["Solde"].min()), 2) if not cj.empty else solde_initial_caisse},',
+      '        "especes_art_11_106": {"excedent_total_ttc": round(exc_ttc, 2), "reintegration_is_ht": round(exc_ttc / (1 + tva_rate), 2), "tva_rejetee": round(exc_ttc * tva_rate / (1 + tva_rate), 2)},',
+      '        "rapprochement_ca_tva": {"ca_ht": round(ca_ht, 2), "tva_theorique": round(tva_theo, 2), "tva_4455_nette": round(tva_nette, 2), "ecart_signe_mad": round(ecart_signe, 2)}',
+      '    }',
+      '',
+      'def main() -> int:',
+      '    p = argparse.ArgumentParser(description="TaxRadar DGI — Audit CGI 2026")',
+      '    p.add_argument("--csv", required=True, help="Chemin du fichier Grand Livre CSV")',
+      '    p.add_argument("--sep", default=";", help="Séparateur CSV (défaut: ;)")',
+      '    p.add_argument("--decimal", default=",", help="Séparateur décimal (défaut: ,)")',
+      '    p.add_argument("--solde-initial-caisse", type=float, default=0.0, help="Report à nouveau compte 5161")',
+      '    p.add_argument("--tva-rate", type=float, default=0.20, help="Taux TVA de référence (0.20 ou 0.10)")',
+      '    p.add_argument("--out", default="", help="Chemin optionnel d\'export JSON")',
+      '    args = p.parse_args()',
+      '    try:',
+      '        res = audit(load_ledger(Path(args.csv), args.sep, args.decimal), args.solde_initial_caisse, args.tva_rate)',
+      '    except Exception as err:',
+      '        print(f"Erreur : {err}", file=sys.stderr); return 1',
+      '    txt = json.dumps(res, indent=2, ensure_ascii=False)',
+      '    print(txt)',
+      '    if args.out: Path(args.out).write_text(txt, encoding="utf-8")',
+      '    return 0',
+      '',
+      'if __name__ == "__main__":',
+      '    sys.exit(main())'
+    ].join('\n');
+
+    const XL_DATA = [
+      { code: '5161 Caisse', ref: 'Art. 213-I-4° CGI', title: 'Contrôle solde créditeur quotidien avec report à nouveau',
+        desc: 'Vérifie si le solde cumulé du compte 5161 (report en H1, A: Compte, D: Débit, E: Crédit) passe en négatif (compatible codes numériques ou textes).',
+        fr: '=SI(H1+SOMMEPROD((GAUCHE(TEXTE($A$2:A2;"0");4)="5161")*($D$2:D2-$E$2:E2))<0;"ALERTE : Caisse créditrice";"OK")',
+        en: '=IF(H1+SUMPRODUCT((LEFT(TEXT($A$2:A2,"0"),4)="5161")*($D$2:D2-$E$2:E2))<0,"ALERT: Negative Cash","OK")' },
+      { code: '4411 Espèces', ref: 'Art. 11-II & 106-II', title: 'Excédent combiné journalier (5 000 TTC) & mensuel (50 000 TTC)',
+        desc: 'Calcule l\'excédent espèces par fournisseur (B: Date, C: Tiers, D: Mode, E: TTC, F: Mois AAAA-MM) sur les deux plafonds légaux.',
+        fr: '=MAX(0;SOMME.SI.ENS($E$2:$E$5000;$B$2:$B$5000;B2;$C$2:$C$5000;C2;$D$2:$D$5000;"Espèces")-5000;SOMME.SI.ENS($E$2:$E$5000;$F$2:$F$5000;F2;$C$2:$C$5000;C2;$D$2:$D$5000;"Espèces")-50000)',
+        en: '=MAX(0,SUMIFS($E$2:$E$5000,$B$2:$B$5000,B2,$C$2:$C$5000,C2,$D$2:$D$5000,"Espèces")-5000,SUMIFS($E$2:$E$5000,$F$2:$F$5000,F2,$C$2:$C$5000,C2,$D$2:$D$5000,"Espèces")-50000)' },
+      { code: '3463 / 4463', ref: 'Art. 13-VII & 10-II-A-2°', title: 'CCA débiteur & plafond de déductibilité des intérêts',
+        desc: 'L1 : alerte CCA débiteur 3463 (A: Compte, D: Débit, E: Crédit). L2 : réintégration d\'intérêts CCA (A2: Capital libéré Oui/Non, B2: Capital, C2: Avance, D2: Taux servi, E2: Taux arrêté BAM, F2: Intérêts).',
+        fr: '=SI(SOMMEPROD((GAUCHE(TEXTE($A$2:$A$5000;"0");4)="3463")*($D$2:$D$5000-$E$2:$E$5000))>0;"ALERTE : CCA débiteur";"OK")\n=SI(A2<>"Oui";F2;MAX(0;F2-(MIN(C2;B2)*MIN(D2;E2))))',
+        en: '=IF(SUMPRODUCT((LEFT(TEXT($A$2:$A$5000,"0"),4)="3463")*($D$2:$D$5000-$E$2:$E$5000))>0,"ALERT: Debit CCA","OK")\n=IF(A2<>"Yes",F2,MAX(0,F2-(MIN(C2,B2)*MIN(D2,E2))))' },
+      { code: '711/712 vs 4455', ref: 'Art. 95 & 110 CGI', title: 'Rapprochement algébrique signé CA comptable / TVA 4455',
+        desc: 'Intègre débits et crédits (avoirs/régularisations) et conserve le signe de l\'écart (taux TVA de référence en H1 : 0,20 ou 0,10).',
+        fr: '=SOMMEPROD((GAUCHE(TEXTE($A$2:$A$5000;"0");4)="4455")*($E$2:$E$5000-$D$2:$D$5000))-SOMMEPROD(((GAUCHE(TEXTE($A$2:$A$5000;"0");3)="711")+(GAUCHE(TEXTE($A$2:$A$5000;"0");3)="712"))*($E$2:$E$5000-$D$2:$D$5000))*$H$1',
+        en: '=SUMPRODUCT((LEFT(TEXT($A$2:$A$5000,"0"),4)="4455")*($E$2:$E$5000-$D$2:$D$5000))-SUMPRODUCT(((LEFT(TEXT($A$2:$A$5000,"0"),3)="711")+(LEFT(TEXT($A$2:$A$5000,"0"),3)="712"))*($E$2:$E$5000-$D$2:$D$5000))*$H$1' }
+    ];
+
+    const TIMELINE_DATA = [
+      { n: '01', ref: 'Art. 232-I, III, V, VI & VIII', title: 'Prescription & droit de reprise',
+        body: 'Droit de reprise jusqu\'au 31 décembre de la 4e année suivant la clôture (porté à 10 ans en cas de défaut de déclaration, Art. 232-VIII-15°). Imputation de déficits/crédits TVA d\'exercices prescrits : contrôle étendu aux 4 derniers exercices prescrits, strictement plafonné au montant imputé (Art. 232-III).',
+        foot: 'Interruption par notification (Art. 232-V) ; suspension durant les recours en commission ou judiciaires (Art. 232-VI).' },
+      { n: '02', ref: 'Art. 212-I & Art. 219', title: 'Avis de vérification & Charte du contribuable',
+        body: 'Notification obligatoire de l\'avis de vérification accompagné de la Charte du contribuable au moins 15 jours avant la date fixée. La vérification doit débuter dans un délai maximum de 5 jours ouvrables, constaté par procès-verbal.',
+        foot: 'Obligation de présenter la comptabilité sur support électronique (Art. 210).' },
+      { n: '03', ref: 'Art. 212-I & Art. 216-III', title: 'Vérification sur place & débat oral',
+        body: 'Durée maximale sur place : 3 mois si le CA HT déclaré au CPC est ≤ 50 M MAD ; 6 mois si le CA HT dépasse 50 M MAD (hors suspensions légales). Un échange oral et contradictoire formalisé par PV précède la clôture.',
+        foot: 'Contrôle simultané comptabilité + ESFP prévu à l\'Art. 216-III ; accord à l\'amiable possible (Art. 221 ter).' },
+      { n: '04', ref: 'Art. 220-I & Art. 221-I', title: '1re lettre de notification & Procédure accélérée',
+        body: 'Notification motivée des redressements dans les 3 mois suivant la fin du contrôle ; réponse du contribuable sous 30 jours francs. Procédure accélérée (Art. 221-I) applicable en cas de cession, cessation, transformation, redressement/liquidation judiciaire ou procédure de sauvegarde (LF 2026).',
+        foot: 'En procédure accélérée, les impositions sont émises dès la 2e lettre de notification.' },
+      { n: '05', ref: 'Art. 220-II', title: '2e lettre de notification & pourvoi',
+        body: 'En cas de rejet total ou partiel des observations, la DGI notifie ses motifs et les bases maintenues dans un délai maximum de 60 jours suivant la réception de la réponse. Le contribuable dispose de 30 jours pour saisir la commission compétente.',
+        foot: 'Défaut de pourvoi dans les 30 jours = mise en recouvrement immédiate.' },
+      { n: '06', ref: 'Art. 225, 225 bis, 226 & 208-I', title: 'Commissions de recours (CLT / CRRF / CNRF)',
+        body: 'CLT (Art. 225) : CPU, foncier, droits d\'enregistrement et de timbre, revenus et gains divers (Art. 70 bis). CRRF (Art. 225 bis) : vérifications CA < 10 M MAD, revenus et profits de capitaux mobiliers. CNRF (Art. 226) : CA ≥ 10 M MAD, ESFP (Art. 216), contrôle simultané (216-III) ou abus de droit (213-V).',
+        foot: 'Délai de décision : 12 mois. Suspension de la majoration de retard Art. 208-I au-delà de 12 mois.' },
+      { n: '07', ref: 'Art. 220-VIII & Art. 221-IV', title: 'Nullités de la procédure de rectification',
+        body: 'Nullité encourue en cas de défaut de notification de l\'avis de vérification et/ou de la Charte dans le délai de 15 jours, ou de défaut de réponse de l\'administration dans le délai légal de 60 jours.',
+        foot: 'Ces causes de nullité ne peuvent être soulevées pour la première fois devant les commissions (CLT, CRRF, CNRF).' },
+      { n: '08', ref: 'Art. 242 & Art. 243', title: 'Recours judiciaire devant le tribunal administratif',
+        body: 'Les décisions des commissions (CLT, CRRF, CNRF) peuvent être contestées par le contribuable ou l\'administration devant le tribunal administratif dans un délai de 60 jours suivant leur notification.',
+        foot: 'Sursis au recouvrement subordonné à la constitution de garanties (Code de recouvrement des créances publiques).' }
+    ];
+
+    var xlLang = 'fr';
+    function renderXL() {
+      document.getElementById('xl-grid').innerHTML = XL_DATA.map(function(item, i) {
+        var f = xlLang === 'fr' ? item.fr : item.en;
+        return '<article class="card-sub stack-sm" style="justify-content:space-between;">' +
+          '<div><div class="row-between" style="margin-bottom:6px;"><span class="badge b-blue mono">' + escapeHTML(item.code) + '</span>' +
+          '<span class="badge b-gold mono">' + escapeHTML(item.ref) + '</span></div>' +
+          '<h3 class="sub-h" style="margin-bottom:4px;">' + escapeHTML(item.title) + '</h3>' +
+          '<p style="margin:0;font-size:12px;color:var(--text-2);">' + escapeHTML(item.desc) + '</p></div>' +
+          '<div class="stack-sm"><pre class="xl-box">' + escapeHTML(f) + '</pre>' +
+          '<button type="button" class="btn btn-sm xl-copy" data-i="' + i + '">Copier (' + xlLang.toUpperCase() + ')</button></div>' +
+        '</article>';
+      }).join('');
+    }
+    function initTools() {
+      document.getElementById('py-code').textContent = PY_CODE;
+      renderXL();
+      document.getElementById('timeline-grid').innerHTML = TIMELINE_DATA.map(function(s) {
+        return '<article class="tl-card"><div><div class="row-between" style="margin-bottom:8px;">' +
+          '<span class="step-badge">' + escapeHTML(s.n) + '</span><span class="badge b-neutral mono">' + escapeHTML(s.ref) + '</span></div>' +
+          '<h3 class="sub-h">' + escapeHTML(s.title) + '</h3>' +
+          '<p style="margin:0;font-size:12px;color:var(--text-2);">' + escapeHTML(s.body) + '</p></div>' +
+          '<div style="font-size:12px;color:var(--text-3);border-top:1px solid var(--border);padding-top:8px;">' + escapeHTML(s.foot) + '</div></article>';
+      }).join('');
+
+      document.getElementById('btn-py-copy').addEventListener('click', function() { copyText(PY_CODE, 'Script Python copié.'); });
+      document.getElementById('btn-py-dl').addEventListener('click', function() { downloadFile(PY_CODE, 'audit_taxradar_dgi.py', 'text/x-python;charset=utf-8;'); toast('audit_taxradar_dgi.py téléchargé.', 'success'); });
+      document.getElementById('xl-fr').addEventListener('click', function() {
+        xlLang = 'fr'; document.getElementById('xl-fr').classList.add('active'); document.getElementById('xl-en').classList.remove('active'); renderXL();
+      });
+      document.getElementById('xl-en').addEventListener('click', function() {
+        xlLang = 'en'; document.getElementById('xl-en').classList.add('active'); document.getElementById('xl-fr').classList.remove('active'); renderXL();
+      });
+      document.getElementById('xl-grid').addEventListener('click', function(ev) {
+        var b = ev.target.closest('.xl-copy');
+        if (!b) return;
+        var item = XL_DATA[parseInt(b.getAttribute('data-i'), 10)];
+        if (item) copyText(xlLang === 'fr' ? item.fr : item.en, 'Formule ' + item.code + ' copiée.');
+      });
+    }
+
+    /* =========================================================================
+       9. INITIALISATION PRINCIPALE — NAVIGATION D'ABORD, MODULES ISOLÉS
+    ========================================================================= */
+    document.addEventListener('DOMContentLoaded', function() {
+      bindTabs();
+      try { initSimulator(); } catch (e) { console.error('Simulateur:', e); toast('Erreur d\'initialisation Simulateur.', 'error'); }
+      try { initLoi6921(); }   catch (e) { console.error('Loi 69-21:', e);  toast('Erreur d\'initialisation Loi 69-21.', 'error'); }
+      try { initVeille(); }    catch (e) { console.error('Veille:', e);     toast('Erreur d\'initialisation Veille.', 'error'); }
+      try { initTools(); }     catch (e) { console.error('Outils:', e);     toast('Erreur d\'initialisation Boîte à outils.', 'error'); }
+    });
+
+    /* =========================================================================
+       10. SUITE D'AUTO-TESTS UNITAIRES (Console : runTaxRadarSelfTests())
+    ========================================================================= */
+    window.runTaxRadarSelfTests = function() {
+      var cases = [];
+      function test(name, cond, detail) { cases.push({ test: name, ok: !!cond, detail: detail || '' }); }
+
+      var r1 = evalL69({ ref: 'T1', fournisseur: 'A', emit: '2026-01-04', deliv: '', pay: '2026-04-10', ttc: 240000, delai: 60, sect: false, litige: false }, 15000000, null, '2026-11-22');
+      test('UTC Ramadan (04/01/2026 + 60j -> 10/04/2026 = 36j, 2 mois)', r1.days === 36 && r1.months === 2, 'days=' + r1.days + ', months=' + r1.months);
+
+      var r2 = evalL69({ ref: 'T2', fournisseur: 'B', emit: '2024-03-15', deliv: '', pay: '2024-08-20', ttc: 8000, delai: 60, sect: false, litige: false }, 15000000, null, '2026-11-22');
+      test('Exemption <= 10 000 MAD avant 01/01/2025', r2.fine === 0, 'fine=' + r2.fine);
+
+      var r3 = evalL69({ ref: 'T3', fournisseur: 'C', emit: '2026-01-01', deliv: '', pay: '2026-06-15', ttc: 100000, delai: 150, sect: false, litige: false }, 15000000, 2.25, '2026-11-22');
+      test('Plafonnement légal effectif 150j -> 120j', r3.effDelai === 120 && r3.capWarn === true && r3.fine > 0, 'effDelai=' + r3.effDelai);
+
+      var r4 = evalL69({ ref: 'T4', fournisseur: 'D', emit: '2026-01-15', deliv: '', pay: '2026-05-15', ttc: 100000, delai: 60, sect: false, litige: false, opType: 'periodique' }, 15000000, 2.25, '2026-11-22');
+      test('Opération périodique -> départ 1er du mois suivant (01/02/2026)', fmtISO(r4.startUTC) === '2026-02-01', 'start=' + fmtISO(r4.startUTC));
+
+      var r5 = evalL69({ ref: 'T5', fournisseur: 'E', emit: '2026-01-15', deliv: '', pay: '2026-05-15', ttc: 100000, delai: 60, sect: false, litige: false, opType: 'public' }, 15000000, 2.25, '2026-11-22');
+      test('Établissement public sans date constat -> publicWarn=true', r5.publicWarn === true, 'startNote=' + r5.startNote);
+
+      var r6 = evalL69({ ref: 'T6', fournisseur: 'F', emit: '2026-01-04', deliv: '', pay: '2026-06-10', ttc: 100000, delai: 60, sect: false, litige: true }, 15000000, 2.25, '2026-11-22');
+      test('Suspension litige judiciaire Art. 78-3 -> 0 MAD', r6.fine === 0 && r6.days > 0, 'fine=' + r6.fine);
+
+      var sMin = computeScore({ ca: 1000000, special: false, tvaGap: 0, deficits: 0, noEtat: false, caisse: 'normale', caisseAmt: 850000, marge: 0, cash: 0, ccaOn: false, ccaAmt: 0, l69: false, loyersPP: false, ras: false }).total;
+      var sMax = computeScore({ ca: 600000000, special: true, tvaGap: 20, deficits: 6, noEtat: true, caisse: 'crediteur', caisseAmt: 3000000, marge: 30, cash: 1000000, ccaOn: true, ccaAmt: 1000000, l69: true, loyersPP: true, ras: true }).total;
+      test('Bornes du score simulateur (0 et 100)', sMin === 0 && sMax === 100, 'min=' + sMin + ', max=' + sMax);
+
+      var passed = cases.filter(function(c) { return c.ok; }).length;
+      if (console.table) console.table(cases);
+      return { passed: passed, total: cases.length, allPassed: passed === cases.length, cases: cases };
+    };
+  </script>
+</body>
+</html>
